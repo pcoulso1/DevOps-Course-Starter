@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block title %}To-Do App{% endblock %}
+
+{% block content %}
+  <div class="jumbotron">
+    <h1 class="display-4">To-Do App</h1>
+    <p class="lead">Just another to-do app.</p>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <form action="/add" method="post">
+        <h2>Add New Items</h2>
+        <div class="form-group">
+          <label for="todo">Description</label>
+          <input type="text" class="form-control" id="todo" name="new_todo">
+          <small id="todohelp" class="form-text text-muted">Please enter the task discription.</small>
+        </div>
+        <button type="submit" name="add" class="btn btn-primary">Add Task</button>
+        <button type="submit" name="cancel" class="btn btn-primary">Cancel</button>
+      </form>
+    </div>
+  </div>
+  
+{% endblock %}

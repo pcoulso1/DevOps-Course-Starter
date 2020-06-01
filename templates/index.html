@@ -16,6 +16,8 @@
             <th scope="col">#</th>
             <th scope="col">Task</th>
             <th scope="col">Status</th>
+            <th scope="col">Update</th>
+            <th scope="col">Remove</th>
           </tr>
         </thead>
         <tbody>
@@ -25,6 +27,16 @@
             <th scope="row">{{ item.id }}</th>
             <td>{{ item.title }}</td>
             <td>{{ item.status}}</td>
+            <td>
+              <form action="/update/{{ item.id }}">
+                <button type="submit" id="status" class="btn btn-primary btn-sm" {% if 'Completed' == item.status %}disabled{% endif %}>Done</button>
+              </form>
+            </td>
+            <td>
+              <form action="/delete/{{ item.id }}">
+                <button type="submit" id="status" class="btn btn-primary btn-sm">Remove</button>
+              </form>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
@@ -33,17 +45,9 @@
   </div>
   
   <div class="row">
-    <div class="col-md-12">
-      <form action="/add" method="post">
-        <h6>Add New Items</h6>
-        <div class="form-group">
-          <label for="todo">Description</label>
-          <input type="text" class="form-control" id="todo" name="new_todo">
-          <small id="todohelp" class="form-text text-muted">Please enter the task discription.</small>
-        </div>
-        <button type="submit" class="btn btn-primary">Add Task</button>
-      </form>
-    </div>
+    <form action="/add">
+      <button type="submit" class="btn btn-primary">Add Task</button>
+    </form>
   </div>
   
 {% endblock %}
