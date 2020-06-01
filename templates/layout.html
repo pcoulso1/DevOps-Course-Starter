@@ -11,9 +11,14 @@
   <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
       <a class="navbar-brand" href="/">To-Do App</a>
+      {% block navbar %}{% endblock %}
     </nav>
 
     <div class="container body-content">
+      <div class="jumbotron">
+        <h1 class="display-4">To-Do App</h1>
+        <p class="lead">Just another to-do app.</p>
+      </div>
       {% block content %}{% endblock %}
     </div>
 

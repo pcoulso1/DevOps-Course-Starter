@@ -1,12 +1,21 @@
 {% extends "layout.html" %}
 {% block title %}To-Do App{% endblock %}
 
-{% block content %}
-  <div class="jumbotron">
-    <h1 class="display-4">To-Do App</h1>
-    <p class="lead">Just another to-do app.</p>
-  </div>
+{% block navbar %}
+<div class="collapse navbar-collapse" id="navbarText">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="/">Home</a>
+    </li>
+    <li class="nav-item active">
+      <a class="nav-link" href="/add">Add</a>
+    </li>
+  </ul>
+</div>
+{% endblock %}
 
+
+{% block content %}
   <div class="row">
     <div class="col-md-12">
       <form action="/add" method="post">
@@ -21,5 +30,4 @@
       </form>
     </div>
   </div>
-  
 {% endblock %}
