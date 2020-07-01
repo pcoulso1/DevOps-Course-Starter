@@ -1,5 +1,4 @@
 from flask import session
-from collections import OrderedDict
 
 _DEFAULT_ITEMS = [
     { 'id': 1, 'status': 'Not Started', 'title': 'List saved todo items' },
@@ -71,7 +70,7 @@ def save_item(item):
 
     return item
 
-def update_item(id):
+def complete_item(id):
     """
     Update the status of an existing item in the session. If no existing item matches the ID of the specified item, nothing is saved.
 

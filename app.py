@@ -10,7 +10,7 @@ def index():
 
 @app.route('/update/<id>')
 def update(id):
-    session.update_item(id)
+    session.complete_item(id)
     return redirect("/")
 
 @app.route('/add', methods=['GET','POST'])
