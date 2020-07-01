@@ -1,18 +1,61 @@
 {% extends "layout.html" %}
 {% block title %}To-Do App{% endblock %}
 
-{% block content %}
-  <div class="jumbotron">
-    <h1 class="display-4">To-Do App</h1>
-    <p class="lead">Just another to-do app.</p>
-  </div>
+{% block navbar %}
+<div class="collapse navbar-collapse" id="navbarText">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item active">
+      <a class="nav-link" href="/">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/add">Add</a>
+    </li>
+  </ul>
+</div>
+{% endblock %}
 
+{% block content %}
   <div class="row">
     <div class="col-md-12">
       <h2>Items</h2>
-      <ul class="list-group mb-4">
-        <!-- List the todo items here -->
-      </ul>
+      <table class="table table-striped table-bordered table-sm">
+        <thread>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Task</th>
+            <th scope="col">Status</th>
+            <th scope="col">Update</th>
+            <th scope="col">Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- List the todo items here -->
+          {% for item in items %}
+          <tr>
+            <th scope="row">{{ item.id }}</th>
+            <td>{{ item.title }}</td>
+            <td>{{ item.status}}</td>
+            <td>
+              <form action="/update/{{ item.id }}">
+                <button type="submit" id="status" class="btn btn-primary btn-sm" {% if 'Completed' == item.status %}disabled{% endif %}>Done</button>
+              </form>
+            </td>
+            <td>
+              <form action="/delete/{{ item.id }}">
+                <button type="submit" id="status" class="btn btn-primary btn-sm">Remove</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
+  
+  <div class="row">
+    <form action="/add">
+      <button type="submit" class="btn btn-primary">Add Task</button>
+    </form>
+  </div>
+  
 {% endblock %}

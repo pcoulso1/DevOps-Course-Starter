@@ -13,8 +13,10 @@ def get_items():
     Returns:
         list: The list of saved items.
     """
-    return session.get('items', _DEFAULT_ITEMS)
-
+    items = session.get('items', _DEFAULT_ITEMS)
+    items = sorted(items, key=lambda kv: kv['id'])
+    items = sorted(items, key=lambda kv: kv['status'], reverse=True)
+    return items
 
 def get_item(id):
     """
@@ -67,3 +69,34 @@ def save_item(item):
     session['items'] = updated_items
 
     return item
+
+def complete_item(id):
+    """
+    Update the status of an existing item in the session. If no existing item matches the ID of the specified item, nothing is saved.
+
+    Args:
+        id: The id of the item to updated.
+    """
+    item = get_item(id)
+    if item != None:
+        item["status"] = "Completed"
+        save_item(item)
+
+    return item
+
+def remove_item(id):
+    """
+    Removes an existing item in the session. If no existing item matches the ID of the specified item, nothing is saved.
+
+    Args:
+        id: The id of the item to remove.
+    """
+    item = get_item(id)
+    if item != None:
+        existing_items = get_items()
+        existing_items.remove(item)
+        session['items'] = existing_items
+
+    return item
+
+
