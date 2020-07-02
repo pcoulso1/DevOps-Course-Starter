@@ -158,9 +158,9 @@ def add_item(title, description, due):
 
     params = get_default_params()
     params.update({
-        'name': title, 
-        'idList': todo_list['id'], 
-        'desc': description, 
+        'name': title,
+        'idList': todo_list['id'],
+        'desc': description,
         'due': due})
     url = build_url('/cards')
 

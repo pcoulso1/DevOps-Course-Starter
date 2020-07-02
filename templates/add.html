@@ -14,31 +14,47 @@
 </div>
 {% endblock %}
 
-
 {% block content %}
-  <div class="row">
-    <div class="col-md-12">
-      <form action="/add" method="post">
-        <h2>Add New Items</h2>
-        <div class="form-group">
-          <label for="todo_title">Title</label>
-          <input type="text" class="form-control" id="todo_title" name="new_todo_title" required>
-          <small id="todo_title_help" class="form-text text-muted">Please enter the task title.</small>
-          <label for="todo_description">Description</label>
-          <input type="text" class="form-control" id="todo_description" name="new_todo_description">
-          <small id="todo_description_help" class="form-text text-muted">Please enter the task description.</small>
-          <label for="todo_due">Due Date</label>
-          <div class="input-group date" data-provide="datepicker" data-date-format="dd/MM/yyyy">
-            <input type="text" class="form-control" id="todo_due" name="new_todo_due" >
-            <div class="input-group-addon">
-                <span class="glyphicon glyphicon-th"></span>
-            </div>
+<div class="row">
+  <div class="col-md-12">
+    <form action="/add" method="post">
+      <h2>Add New Items</h2>
+      <div class="form-group">
+        <label for="todo_title">Title</label>
+        <input type="text" class="form-control" id="todo_title" name="new_todo_title" required>
+        <small id="todo_title_help" class="form-text text-muted">Please enter the task title.</small>
+        <label for="todo_description">Description</label>
+        <input type="text" class="form-control" id="todo_description" name="new_todo_description">
+        <small id="todo_description_help" class="form-text text-muted">Please enter the task description.</small>
+        <label for="todo_due">Due Date</label>
+        <div class="input-group date" data-provide="datepicker">
+          <input type="text" class="form-control" id="todo_due" name="new_todo_due">
+          <div class="input-group-append">
+            <span class="fa fa-calendar input-group-text" aria-hidden="true"></span>
           </div>
-          <small id="todo_due_help" class="form-text text-muted">Please enter the due date for the task.</small>
         </div>
-        <button type="submit" name="add" class="btn btn-primary">Add Task</button>
-        <button type="submit" name="cancel" class="btn btn-secondary" formnovalidate>Cancel</button>
-      </form>
-    </div>
+        <small id="todo_due_help" class="form-text text-muted">Please enter the due date for the task.</small>
+      </div>
+      <button type="submit" name="add" class="btn btn-primary">Add Task</button>
+      <button type="submit" name="cancel" class="btn btn-secondary" formnovalidate>Cancel</button>
+    </form>
   </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+  $(document).ready(function () {
+    var date_input = $('input[name="new_todo_due"]').parent();
+    date_input.datepicker({
+      format: 'dd/MM/yyyy',
+      todayHighlight: true,
+      autoclose: true,
+    })
+    var date = new Date()
+    date.setDate(date.getDate() + 5);
+    date_input.datepicker('update', date);
+  })
+</script>
 {% endblock %}
