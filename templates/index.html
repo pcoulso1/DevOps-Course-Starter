@@ -31,7 +31,11 @@
           <!-- List the todo items here -->
           {% for item in items %}
           <tr>
-            <td>{{ item.title }}</td>
+            <td>
+              {{ item.title }}
+              <br>
+              <small class="text-muted">{{ item.description }}</small>
+            </td>
             <td>{{ item.status }}</td>
             <td>
               <form action="/update/{{ item.id }}/{{ item.next_status() }}" method="post">

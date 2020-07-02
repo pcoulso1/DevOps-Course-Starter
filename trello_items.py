@@ -7,6 +7,7 @@ A Global to be used to cache the doard ID
 """
 BOARD_ID = ""
 
+
 def build_url(endpoint):
     """
     Builds the API url from a base URL and the specific endpoint for Trello.
@@ -19,6 +20,7 @@ def build_url(endpoint):
     """
     return os.getenv('TRELLO_BASE_URL') + endpoint
 
+
 def get_default_params():
     """
     Gets the default parameter to be added to all calls to Trello. Specifically the key 
@@ -30,7 +32,8 @@ def get_default_params():
     return {
         'key': os.getenv('TRELLO_KEY'),
         'token': os.getenv('TRELLO_TOKEN')
-        }
+    }
+
 
 def get_boards():
     """
@@ -42,10 +45,11 @@ def get_boards():
     params = get_default_params()
     url = build_url('/members/me/boards')
 
-    response = requests.get(url, params = params)
+    response = requests.get(url, params=params)
     boards = response.json()
 
     return boards
+
 
 def get_board_id():
     """
@@ -57,10 +61,12 @@ def get_board_id():
     global BOARD_ID
     if BOARD_ID == "":
         boards = get_boards()
-        BOARD_ID = next((board['id'] for board in boards if board['name'] == "ToDoBoard"), None)
+        BOARD_ID = next(
+            (board['id'] for board in boards if board['name'] == "ToDoBoard"), None)
     return BOARD_ID
 
-def get_lists(include_cards = True):
+
+def get_lists(include_cards=True):
     """
     Fetches all lists from the board in Trello.
 
@@ -74,13 +80,14 @@ def get_lists(include_cards = True):
 
     params = get_default_params()
     if include_cards:
-        params.update({'cards':'all'})
+        params.update({'cards': 'all'})
     url = build_url('/boards/%s/lists' % board_id)
 
-    response = requests.get(url, params = params)
+    response = requests.get(url, params=params)
     lists = response.json()
 
     return lists
+
 
 def get_list(name):
     """
@@ -95,6 +102,7 @@ def get_list(name):
     lists = get_lists(False)
     return next((list for list in lists if list['name'] == name), None)
 
+
 def get_items():
     """
     Fetches all saved items from the Trello.
@@ -107,12 +115,17 @@ def get_items():
     items = []
     for card_list in card_lists:
         for card in card_list['cards']:
-            items.append(Item(card['id'], card['name'], card_list['name']))
+            items.append(
+                Item(card['id'],
+                     card['name'],
+                     card_list['name'],
+                     card['desc']))
 
     items = sorted(items, key=lambda kv: kv.id)
     items = sorted(items, key=lambda kv: kv.status, reverse=True)
 
     return items
+
 
 def get_item(id):
     """
@@ -127,7 +140,8 @@ def get_item(id):
     items = get_items()
     return next((item for item in items if item.id == id), None)
 
-def add_item(title):
+
+def add_item(title, description):
     """
     Adds a new item with the specified title to the Trello.
 
@@ -140,13 +154,15 @@ def add_item(title):
     todo_list = get_list('ToDo')
 
     params = get_default_params()
-    params.update({ 'name': title, 'idList': todo_list['id'] })
+    params.update(
+        {'name': title, 'idList': todo_list['id'], 'desc': description})
     url = build_url('/cards')
 
-    response = requests.post(url, params = params)
+    response = requests.post(url, params=params)
     item = response.json()
 
     return item
+
 
 def update_item(id, next_status):
     """
@@ -161,13 +177,14 @@ def update_item(id, next_status):
     new_list = get_list(next_status)
 
     params = get_default_params()
-    params.update({ 'idList': new_list['id'] })
+    params.update({'idList': new_list['id']})
     url = build_url('/cards/%s' % id)
 
-    response = requests.put(url, params = params)
+    response = requests.put(url, params=params)
     item = response.json()
 
     return item
+
 
 def remove_item(id):
     """
@@ -182,7 +199,7 @@ def remove_item(id):
     params = get_default_params()
     url = build_url('/cards/%s' % id)
 
-    response = requests.delete(url, params = params)
+    response = requests.delete(url, params=params)
     undefined = response.json()
 
     return undefined

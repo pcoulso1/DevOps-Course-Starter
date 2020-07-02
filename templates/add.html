@@ -21,9 +21,12 @@
       <form action="/add" method="post">
         <h2>Add New Items</h2>
         <div class="form-group">
+          <label for="todo">Title</label>
+          <input type="text" class="form-control" id="todo_title" name="new_todo_title" required>
+          <small id="todohelp" class="form-text text-muted">Please enter the task title.</small>
           <label for="todo">Description</label>
-          <input type="text" class="form-control" id="todo" name="new_todo" required>
-          <small id="todohelp" class="form-text text-muted">Please enter the task discription.</small>
+          <input type="text" class="form-control" id="todo_description" name="new_todo_description">
+          <small id="todohelp" class="form-text text-muted">Please enter the task description.</small>
         </div>
         <button type="submit" name="add" class="btn btn-primary">Add Task</button>
         <button type="submit" name="cancel" class="btn btn-primary">Cancel</button>
