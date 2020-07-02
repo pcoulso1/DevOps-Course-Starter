@@ -114,3 +114,10 @@ env/
 
 ### Configuration files ###
 .env
+
+### vscode files ###
+.vscode/
+*.code-workspace
+
+### stackdump ###
+*.stackdump
