@@ -1,10 +1,11 @@
 
 class Item:
 
-    def __init__(self, id, title, status='ToDo', description=''):
+    def __init__(self, id, title, status='ToDo', description='', due=''):
         self.id = id
         self.title = title
         self.description = description
+        self.due = due
         self.status = status
 
     def can_delete(self):
@@ -17,3 +18,8 @@ class Item:
             return 'Done'
         elif self.status == 'Done':
             return 'ToDo'
+
+    def due_date(self):
+        if self.due is not None:
+            return self.due
+        return ""

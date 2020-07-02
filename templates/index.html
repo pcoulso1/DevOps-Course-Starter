@@ -23,6 +23,7 @@
           <tr>
             <th scope="col">Task</th>
             <th scope="col">Status</th>
+            <th scope="col">Due</th>
             <th scope="col">Update</th>
             <th scope="col">Remove</th>
           </tr>
@@ -37,6 +38,7 @@
               <small class="text-muted">{{ item.description }}</small>
             </td>
             <td>{{ item.status }}</td>
+            <td>{{ item.due_date() }}</td>
             <td>
               <form action="/update/{{ item.id }}/{{ item.next_status() }}" method="post">
                 <button type="submit" id="status" class="btn btn-primary btn-sm">

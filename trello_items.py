@@ -119,7 +119,8 @@ def get_items():
                 Item(card['id'],
                      card['name'],
                      card_list['name'],
-                     card['desc']))
+                     card['desc'],
+                     card['due']))
 
     items = sorted(items, key=lambda kv: kv.id)
     items = sorted(items, key=lambda kv: kv.status, reverse=True)
@@ -141,12 +142,14 @@ def get_item(id):
     return next((item for item in items if item.id == id), None)
 
 
-def add_item(title, description):
+def add_item(title, description, due):
     """
     Adds a new item with the specified title to the Trello.
 
     Args:
         title: The title of the item.
+        description:
+        due:
 
     Returns:
         item: The new saved item.
@@ -154,8 +157,11 @@ def add_item(title, description):
     todo_list = get_list('ToDo')
 
     params = get_default_params()
-    params.update(
-        {'name': title, 'idList': todo_list['id'], 'desc': description})
+    params.update({
+        'name': title, 
+        'idList': todo_list['id'], 
+        'desc': description, 
+        'due': due})
     url = build_url('/cards')
 
     response = requests.post(url, params=params)
@@ -194,12 +200,10 @@ def remove_item(id):
         id: The id of the item to remove.
 
     Returns:
-        undefined: An undefined response object from delete.
+        response: from the api call.
     """
     params = get_default_params()
     url = build_url('/cards/%s' % id)
 
     response = requests.delete(url, params=params)
-    undefined = response.json()
-
-    return undefined
+    return response

@@ -26,18 +26,19 @@ def add():
         if 'add' in request.form:
             item_store.add_item(
                 request.form.get('new_todo_title'),
-                request.form.get('new_todo_description'))
+                request.form.get('new_todo_description'),
+                request.form.get('new_todo_due'))
         return redirect("/")
 
     return render_template('add.html', items=item_store.get_items())
 
 
-@app.route('/delete', methods=['POST'], defaults={'id': None})
+@app.route('/delete/<id>', methods=['POST'])
 @app.route('/delete/<id>', methods=['GET'])
 def delete(id):
     if request.method == 'POST':
         if 'delete' in request.form:
-            item_store.remove_item(request.form.get('id'))
+            item_store.remove_item(id)
         return redirect("/")
 
     return render_template('delete.html', item=item_store.get_item(id))
