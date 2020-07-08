@@ -1,9 +1,10 @@
 import os
 import requests
 from item import Item
+from trello_config import Config
 
 """
-A Global to be used to cache the doard ID
+A Global to be used to cache the board ID
 """
 BOARD_ID = ""
 
@@ -18,7 +19,7 @@ def build_url(endpoint):
     Returns:
         url: The full url for the endpoint.
     """
-    return os.getenv('TRELLO_BASE_URL') + endpoint
+    return Config().TRELLO_BASE_URL + endpoint
 
 
 def get_default_params():
@@ -30,17 +31,17 @@ def get_default_params():
         params: A map with the default parameters.
     """
     return {
-        'key': os.getenv('TRELLO_KEY'),
-        'token': os.getenv('TRELLO_TOKEN')
+        'key': Config().TRELLO_KEY, 
+        'token': Config().TRELLO_TOKEN
     }
 
 
 def get_boards():
     """
-    Gets all the boards for the currnt user
+    Gets all the boards for the current user
 
     Returns:
-        boards: json object containing the baords.
+        boards: json object containing the boards.
     """
     params = get_default_params()
     url = build_url('/members/me/boards')
@@ -61,8 +62,9 @@ def get_board_id():
     global BOARD_ID
     if BOARD_ID == "":
         boards = get_boards()
-        BOARD_ID = next(
-            (board['id'] for board in boards if board['name'] == "ToDoBoard"), None)
+        BOARD_ID = next((board['id'] for board in boards if board['name'] == "ToDoBoard"), "")
+        if BOARD_ID == "":
+            raise ValueError("No board with name ToDoBoard was found")
     return BOARD_ID
 
 
@@ -71,7 +73,7 @@ def get_lists(include_cards=True):
     Fetches all lists from the board in Trello.
 
     Args:
-        include_cards: A flag to indicate is the items in the list should also be returned.
+        include_cards: A flag to indicate if the items in the list should also be returned.
 
     Returns:
         list: The list of saved items.
@@ -81,7 +83,7 @@ def get_lists(include_cards=True):
     params = get_default_params()
     if include_cards:
         params.update({'cards': 'all'})
-    url = build_url('/boards/%s/lists' % board_id)
+    url = build_url(f'/boards/{board_id}/lists')
 
     response = requests.get(url, params=params)
     lists = response.json()
@@ -91,7 +93,7 @@ def get_lists(include_cards=True):
 
 def get_list(name):
     """
-    Fetches the list with the sepcific name.
+    Fetches the list with the specific name.
 
     Args:
         name: The name of the list to return.
@@ -112,16 +114,10 @@ def get_items():
     """
     card_lists = get_lists()
 
-    items = []
-    for card_list in card_lists:
-        for card in card_list['cards']:
-            items.append(
-                Item(card['id'],
-                     card['name'],
-                     card_list['name'],
-                     card['desc'],
-                     card['due']))
-
+    items = [Item(card['id'], card['name'], card_list['name'],card['desc'], card['due']) 
+        for card_list in card_lists 
+            for card in card_list['cards']]
+                
     items = sorted(items, key=lambda kv: kv.id)
     items = sorted(items, key=lambda kv: kv.status, reverse=True)
 
@@ -184,7 +180,7 @@ def update_item(id, next_status):
 
     params = get_default_params()
     params.update({'idList': new_list['id']})
-    url = build_url('/cards/%s' % id)
+    url = build_url(f'/cards/{id}')
 
     response = requests.put(url, params=params)
     item = response.json()
@@ -203,7 +199,7 @@ def remove_item(id):
         response: from the api call.
     """
     params = get_default_params()
-    url = build_url('/cards/%s' % id)
+    url = build_url(f'/cards/{id}')
 
     response = requests.delete(url, params=params)
     return response

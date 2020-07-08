@@ -1,13 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import trello_items as item_store
 
-from dotenv import load_dotenv
-
-load_dotenv()
-
 app = Flask(__name__)
-app.config.from_object('flask_config.Config')
-
 
 @app.route('/')
 def index():
