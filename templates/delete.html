@@ -2,36 +2,38 @@
 {% block title %}To-Do App{% endblock %}
 
 {% block navbar %}
-  <div class="collapse navbar-collapse" id="navbarText">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/add">Add</a>
-      </li>
-    </ul>
-  </div>
+<div class="collapse navbar-collapse" id="navbarText">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="/">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/add">Add</a>
+    </li>
+  </ul>
+</div>
 {% endblock %}
 
 
 {% block content %}
-  <div class="row">
-    <div class="col-md-12">
-      <form action="/delete" method="post">
-        <h2>Remove an Item</h2>
-        <div class="form-group">
-          <label for="id">Id</label>
-          <input type="text" class="form-control" id="id" name="id" readonly value="{{ item.id }}">
-          <label for="todo">Description</label>
-          <input type="text" class="form-control" id="todo" name="todo" readonly value="{{ item.title }}">
-          <label for="status">Status</label>
-          <input type="text" class="form-control" id="status" name="status" readonly  value="{{ item.status }}">
-        </div>
-        <button type="submit" name="delete" class="btn btn-primary">Remove Task</button>
-        <button type="submit" name="cancel" class="btn btn-primary">Cancel</button>
-      </form>
-    </div>
+<div class="row">
+  <div class="col-md-12">
+    <form action="/delete/{{ item.id }}" method="post">
+      <h2>Remove an Item</h2>
+      <div class="form-group">
+        <label for="todo">Title</label>
+        <input type="text" class="form-control" id="todo" name="todo" readonly value="{{ item.title }}">
+        <label for="description">Description</label>
+        <input type="text" class="form-control" id="description" name="description" readonly
+          value="{{ item.description }}">
+        <label for="status">Status</label>
+        <input type="text" class="form-control" id="status" name="status" readonly value="{{ item.status }}">
+        <label for="due">Due</label>
+        <input type="text" class="form-control" id="due" name="due" readonly value="{{ item.due_date() }}">
+      </div>
+      <button type="submit" name="delete" class="btn btn-primary">Remove Task</button>
+      <button type="submit" name="cancel" class="btn btn-secondary" formnovalidate>Cancel</button>
+    </form>
   </div>
-  
+</div>
 {% endblock %}
