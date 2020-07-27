@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+from view_model import ViewModel
 import logging
 import trello_items as item_store
 
@@ -9,7 +10,8 @@ logging.basicConfig(level=logging.INFO)
 
 @app.route('/')
 def index():
-    return render_template('index.html', items=item_store.get_items())
+    items =  item_store.get_items()
+    return render_template('index.html', view_model=ViewModel(items))
 
 
 @app.route('/update/<id>/<new_status>', methods=['POST'])
@@ -30,7 +32,7 @@ def add():
                 request.form.get('new_todo_due'))
         return redirect("/")
 
-    return render_template('add.html', items=item_store.get_items())
+    return render_template('add.html')
 
 
 @app.route('/delete/<id>', methods=['POST'])
