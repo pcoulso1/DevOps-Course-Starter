@@ -1,12 +1,14 @@
+from datetime import date, datetime
 from status import Status
 class Item:
 
-    def __init__(self, id, title, status='ToDo', description='', due=''):
+    def __init__(self, id, title, status='ToDo', description='', due='', updated=''):
         self.id = id
         self.title = title
         self.description = description
         self.due = due
         self.status = status
+        self.updated = updated
 
     def can_delete(self):
         """
@@ -42,6 +44,15 @@ class Item:
             return self.due
         return ""
 
+    def done_today(self):
+        """
+        Returns if the item was modified today and the status is done.
+    
+        Returns:
+            bool: if moved into done state today.
+        """
+        return self.status == Status.DONE and datetime.strptime(self.updated, '%Y-%m-%dT%H:%M:%S.%fZ').date() == date.today()
+
     @classmethod
     def from_card(cls, card, card_list):
         """
@@ -54,5 +65,5 @@ class Item:
         Returns:
             cls: An instance of the Item class.
         """
-        return cls(card['id'], card['name'], card_list['name'],card['desc'], card['due'])
+        return cls(card['id'], card['name'], card_list['name'],card['desc'], card['due'], card['dateLastActivity'])
 

@@ -20,3 +20,17 @@ class ViewModel:
     @property
     def done_items(self):
         return [item for item in self._items if item.status == Status.DONE]
+ 
+    @property
+    def show_all_done_items(self):
+        return len(self.done_items) < 5
+
+    @property
+    def recent_done_items(self):
+        return [item for item in self.done_items if item.done_today()]
+        
+    @property
+    def older_done_items(self):
+        return [item for item in self.done_items if not item.done_today()]
+        
+ 

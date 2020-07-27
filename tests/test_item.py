@@ -88,7 +88,8 @@ def test_from_card():
     card = { 'id': 'theId',
              'name': 'theName',
              'desc': 'theDescription',
-             'due': '26/09/2020'}
+             'due': '26/09/2020',
+             'dateLastActivity': '2020-07-02T07:39:25.531Z'}
     card_list = { 'name': Status.TODO }
 
     #when
