@@ -3,11 +3,6 @@ from unittest import mock
 from dotenv import load_dotenv, find_dotenv
 import app
 
-# from hypothesis import given
-# from hypothesis.strategies import integers
-# from selenium import webdriver
-
-
 @pytest.fixture
 def client():
     # Use our test integration config instead of the 'real' version 
@@ -189,30 +184,3 @@ def test_delete_post_page(mock_delete_requests, client):
     assert response.status_code == 302
     assert "<h1>Redirecting...</h1>" in response_html
 
-
-
-# # Module scope re-uses the fixture
-# @pytest.fixture(scope='module')
-# def driver():
-#     # path to your webdriver download
-#     opts = webdriver.ChromeOptions()
-#     opts.add_argument('--headless')
-    
-#     # path to your webdriver download
-#     with webdriver.Chrome('C:/Users/pcoul/Documents/CS Dipolma/Module 3/chromedriver_win32/chromedriver', options=opts) as driver:
-#         yield driver
-
-
-# def test_python_home(driver):
-#     driver.get("https://www.python.org")
-#     assert driver.title == 'Welcome to Python.org'
-
-
-# @pytest.mark.parametrize('number', [-10, 0, 1, 5, 1000000])
-# def test_division(number):
-#     assert number / 1 == number
-
-
-# @given(number=integers())
-# def test_division_with_hypothesis(number):
-#     assert number / 1 == number
