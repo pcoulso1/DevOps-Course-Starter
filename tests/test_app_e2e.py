@@ -30,6 +30,7 @@ def test_app():
     
     # Tear Down
     thread.join(1)
+    item_store.BOARD_ID = ""
 
 @pytest.fixture(scope='module')
 def driver():
@@ -69,3 +70,32 @@ def test_add_element(driver, test_app):
 
     assert driver.title == 'To-Do App'
     assert rowCount == 2
+
+    # cleanup
+    driver.find_element_by_xpath("//button[contains(text(), 'Start Task')]").click()
+    driver.find_element_by_xpath("//button[contains(text(), 'Finish Task')]").click()
+    driver.find_element_by_xpath("//button[contains(text(), 'Remove')]").click()
+    driver.find_element_by_xpath("//button[contains(text(), 'Remove Task')]").click()
+
+
+def test_delete_element(driver, test_app):
+    # given
+    driver.get('http://localhost:5000/')
+    driver.find_element_by_xpath("//button[contains(text(), 'Add Task')]").click()
+    new_task_title_input = driver.find_element_by_xpath("//*[@name='new_todo_title']")
+    new_task_title_input.send_keys('Test Task')
+    new_task_description_input = driver.find_element_by_xpath("//*[@name='new_todo_description']")
+    new_task_description_input.send_keys('Test Task Description')
+    driver.find_element_by_xpath("//button[contains(text(), 'Add Task')]").click()
+
+    # when
+    driver.find_element_by_xpath("//button[contains(text(), 'Start Task')]").click()
+    driver.find_element_by_xpath("//button[contains(text(), 'Finish Task')]").click()
+    driver.find_element_by_xpath("//button[contains(text(), 'Remove')]").click()
+    driver.find_element_by_xpath("//button[contains(text(), 'Remove Task')]").click()
+
+    # then
+    rowCount = len(driver.find_elements_by_xpath("//table[@id='todo-table']/tbody/tr"))
+
+    assert driver.title == 'To-Do App'
+    assert rowCount == 1
