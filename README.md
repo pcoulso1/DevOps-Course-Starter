@@ -68,4 +68,4 @@ You may need to install requirements for setup beforehand, using
 ```bash
 pip install -r requirements-test.txt
 ```
-
+The e2e tests require the chromedriver to run. This can be downloaded from [here](https://sites.google.com/a/chromium.org/chromedriver/downloads) and placed in top level of the project directory  
