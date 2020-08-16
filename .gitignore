@@ -121,3 +121,6 @@ env/
 
 ### stackdump ###
 *.stackdump
+
+### chromedriver ###
+chromedriver.exe

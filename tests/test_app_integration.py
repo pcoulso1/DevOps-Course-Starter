@@ -96,7 +96,7 @@ def mock_delete_requests(*args, **kwargs):
 
 
 @mock.patch('requests.get', side_effect=mock_get_requests)
-def test_default_page(mock_get_requests, client):
+def test_default_endpoint(mock_get_requests, client):
     #given
 
     # when
@@ -119,7 +119,7 @@ def test_default_page(mock_get_requests, client):
 
 @mock.patch('requests.get', side_effect=mock_get_requests)
 @mock.patch('requests.put', side_effect=mock_put_requests)
-def test_update_page(mock_get_requests, mock_put_requests, client):
+def test_update_endpoint(mock_get_requests, mock_put_requests, client):
     #given
 
     # when
@@ -130,7 +130,7 @@ def test_update_page(mock_get_requests, mock_put_requests, client):
     assert response.status_code == 302
     assert "<h1>Redirecting...</h1>" in response_html
 
-def test_add_get_page(client):
+def test_add_get_endpoint(client):
     #given
 
     # when
@@ -143,7 +143,7 @@ def test_add_get_page(client):
     assert "<h2>Add New Items</h2>" in response_html
 
 @mock.patch('requests.post', side_effect=mock_post_requests)
-def test_add_post_page(mock_post_requests, client):
+def test_add_post_endpoint(mock_post_requests, client):
     #given
     form = dict( 
         add='', 
@@ -160,7 +160,7 @@ def test_add_post_page(mock_post_requests, client):
     assert "<h1>Redirecting...</h1>" in response_html
 
 @mock.patch('requests.get', side_effect=mock_get_requests)
-def test_delete_get_page(mock_get_requests, client):
+def test_delete_get_endpoint(mock_get_requests, client):
     #given
 
     # when
@@ -173,7 +173,7 @@ def test_delete_get_page(mock_get_requests, client):
     assert "<h2>Remove an Item</h2>" in response_html
 
 @mock.patch('requests.delete', side_effect=mock_delete_requests)
-def test_delete_post_page(mock_delete_requests, client):
+def test_delete_post_endpoint(mock_delete_requests, client):
     #given
     form = dict(delete='')
 

@@ -36,10 +36,10 @@ def test_app():
 def driver():
     # path to your webdriver download
     opts = webdriver.ChromeOptions()
-    # opts.add_argument('--headless')
+    opts.add_argument('--headless')
     
     # path to your webdriver download
-    with webdriver.Chrome('C:/Users/pcoul/Documents/CS Dipolma/Module 3/chromedriver_win32/chromedriver', options=opts) as driver:
+    with webdriver.Chrome('chromedriver', options=opts) as driver:
         yield driver
 
 def test_home(driver, test_app):
