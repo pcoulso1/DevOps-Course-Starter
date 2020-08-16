@@ -2,14 +2,14 @@ import pytest
 import os
 from threading import Thread 
 
+from unittest import mock
+
+from dotenv import load_dotenv
+load_dotenv(dotenv_path='.env')
+
+import app
 import trello_items as item_store
 
-from unittest import mock
-from dotenv import load_dotenv, find_dotenv
-import app
-
-# from hypothesis import given
-# from hypothesis.strategies import integers
 from selenium import webdriver
 
 @pytest.fixture(scope='module')
