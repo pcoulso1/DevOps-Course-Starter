@@ -90,8 +90,8 @@ vagrant up
 
 The vagrant documentation at https://www.vagrantup.com/docs/providers/hyperv/limitations.html#limited-networking stats;
 
-*Vagrant does not yet know how to create and configure new networks for Hyper-V. When launching a machine with Hyper-V, Vagrant will prompt you asking what virtual switch you want to connect the virtual machine to.
+* Vagrant does not yet know how to create and configure new networks for Hyper-V. When launching a machine with Hyper-V, Vagrant will prompt you asking what virtual switch you want to connect the virtual machine to.
 
-A result of this is that networking configurations in the Vagrantfile are completely ignored with Hyper-V.*
+A result of this is that networking configurations in the Vagrantfile are completely ignored with Hyper-V. *
 
-Although this is not 100% true, it does seem to be when setting 
+Although this is not 100% true, it does seem to be accurate when setting up the "forwarded_port" configuration which is ignored
