@@ -70,25 +70,16 @@ pip install -r requirements-test.txt
 ```
 The e2e tests require the chromedriver to run. This can be downloaded from [here](https://sites.google.com/a/chromium.org/chromedriver/downloads) and placed in top level of the project directory  
 
-## Running the Vagrent
+## Running the Vagrant
 
 This project runs Vagrant on Hyper-V please follow these instructions for setup  https://techcommunity.microsoft.com/t5/virtualization/vagrant-and-hyper-v-tips-and-tricks/ba-p/382373
-
-Ensure SMB1Protocol is enabled e.g.
-```
-Dism /online /Enable-Feature /FeatureName:"SMB1Protocol" -All
-```
-Note to disable use
-```
-Dism /online /Disable-Feature /FeatureName:"SMB1Protocol"
-```
 
 Within the root directory of the project open a cmd.exe as Administrator and execute the following commands;
 ```
 vagrant up
 ```
 
-The vagrant documentation at https://www.vagrantup.com/docs/providers/hyperv/limitations.html#limited-networking stats;
+The [vagrant documentation](https://www.vagrantup.com/docs/providers/hyperv/limitations.html#limited-networking) at states;
 
 *Vagrant does not yet know how to create and configure new networks for Hyper-V. When launching a machine with Hyper-V, Vagrant will prompt you asking what virtual switch you want to connect the virtual machine to.*
 
