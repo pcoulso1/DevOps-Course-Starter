@@ -114,7 +114,7 @@ def get_items():
     """
     card_lists = get_lists()
 
-    items = [Item(card['id'], card['name'], card_list['name'],card['desc'], card['due']) 
+    items = [Item.from_card(card, card_list) 
         for card_list in card_lists 
             for card in card_list['cards']]
                 
