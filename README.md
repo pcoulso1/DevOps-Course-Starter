@@ -69,3 +69,20 @@ You may need to install requirements for setup beforehand, using
 pip install -r requirements-test.txt
 ```
 The e2e tests require the chromedriver to run. This can be downloaded from [here](https://sites.google.com/a/chromium.org/chromedriver/downloads) and placed in top level of the project directory  
+
+## Running the Vagrant
+
+This project runs Vagrant on Hyper-V please follow these instructions for setup  https://techcommunity.microsoft.com/t5/virtualization/vagrant-and-hyper-v-tips-and-tricks/ba-p/382373
+
+Within the root directory of the project open a cmd.exe as Administrator and execute the following commands;
+```
+vagrant up
+```
+
+The [vagrant documentation](https://www.vagrantup.com/docs/providers/hyperv/limitations.html#limited-networking) at states;
+
+*Vagrant does not yet know how to create and configure new networks for Hyper-V. When launching a machine with Hyper-V, Vagrant will prompt you asking what virtual switch you want to connect the virtual machine to.*
+
+*A result of this is that networking configurations in the Vagrantfile are completely ignored with Hyper-V.*
+
+Although this is not 100% true, it does seem to be accurate when setting up the "forwarded_port" configuration which is ignored

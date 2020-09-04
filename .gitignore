@@ -124,3 +124,9 @@ env/
 
 ### chromedriver ###
 chromedriver.exe
+
+# Vagrant
+.vagrant/
+
+# Logfiles
+*.log
