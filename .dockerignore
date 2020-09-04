@@ -1,0 +1,18 @@
+# Ignore files from the docker context
+**/__pycache__
+**/.coverage
+**/tests
+**/.coverage
+.gitignore
+.pytest_cache
+.vagrant
+.vscode
+chromedriver.exe
+poetry.lock
+pyproject.toml
+requirements-test.txt
+setup.ps1
+setup.sh
+Starter.code-workspace
+*.log
+Vagrantfile

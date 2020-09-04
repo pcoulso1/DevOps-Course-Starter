@@ -70,7 +70,7 @@ pip install -r requirements-test.txt
 ```
 The e2e tests require the chromedriver to run. This can be downloaded from [here](https://sites.google.com/a/chromium.org/chromedriver/downloads) and placed in top level of the project directory  
 
-## Running the Vagrant
+## Running within Vagrant VM
 
 This project runs Vagrant on Hyper-V please follow these instructions for setup  https://techcommunity.microsoft.com/t5/virtualization/vagrant-and-hyper-v-tips-and-tricks/ba-p/382373
 
@@ -86,3 +86,24 @@ The [vagrant documentation](https://www.vagrantup.com/docs/providers/hyperv/limi
 *A result of this is that networking configurations in the Vagrantfile are completely ignored with Hyper-V.*
 
 Although this is not 100% true, it does seem to be accurate when setting up the "forwarded_port" configuration which is ignored
+
+## Running within Docker
+
+### Building docker image
+To build the docker image run the following command
+
+```
+docker build -t pcoulso1/devops-course-starter:v0.1 .
+```
+
+### Running the container
+
+To run the container as a daemon run following command
+```
+docker run -p 80:5000 \
+    -e TRELLO_KEY=<key> \
+    -e TRELLO_TOKEN=<token> \
+    -d pcoulso1/devops-course-starter:v0.1
+```
+
+See section on Trello setup for details of how to obtain the key and token values
