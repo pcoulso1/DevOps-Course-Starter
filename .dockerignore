@@ -16,3 +16,5 @@ setup.sh
 Starter.code-workspace
 *.log
 Vagrantfile
+*.env*
+!.env.template
