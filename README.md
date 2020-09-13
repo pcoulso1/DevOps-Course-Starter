@@ -93,17 +93,35 @@ Although this is not 100% true, it does seem to be accurate when setting up the 
 To build the docker image run the following command
 
 ```
-docker build -t pcoulso1/devops-course-starter:v0.1 .
+docker build --target development --tag pcoulso1/devops-course-starter:dev-v0.1 .
+docker build --target production --tag pcoulso1/devops-course-starter:prod-v0.1 .
 ```
 
 ### Running the container
 
-To run the container as a daemon run following command
+To run the production container as a daemon run following command
+```
+docker run -p 80:5000 --env-file .env -d pcoulso1/devops-course-starter:prod-v0.1
+```
+Or
 ```
 docker run -p 80:5000 \
     -e TRELLO_KEY=<key> \
     -e TRELLO_TOKEN=<token> \
-    -d pcoulso1/devops-course-starter:v0.1
+    -d pcoulso1/devops-course-starter:prod-v0.1
 ```
 
-See section on Trello setup for details of how to obtain the key and token values
+To run the development container as a daemon ensure you mount the project directory within the container e.g. run following command
+```
+docker run -p 80:5000 --env-file .env --mount type=bind,source=<pwd>,target=/usr/src/app -d pcoulso1/devops-course-starter:prod-v0.1
+```
+Or
+```
+docker run -p 80:5000 \
+    --mount type=bind,source=<pwd>,target=/usr/src/app
+    -e TRELLO_KEY=<key> \
+    -e TRELLO_TOKEN=<token> \
+    -d pcoulso1/devops-course-starter:prod-v0.1
+```
+
+Note: See section on Trello setup for details of how to obtain the key and token values and setup the .env file.
