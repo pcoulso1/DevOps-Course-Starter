@@ -7,6 +7,7 @@
 .pytest_cache
 .vagrant
 .vscode
+Dockerfile
 chromedriver.exe
 poetry.lock
 pyproject.toml
@@ -17,4 +18,3 @@ Starter.code-workspace
 *.log
 Vagrantfile
 *.env*
-!.env.template
