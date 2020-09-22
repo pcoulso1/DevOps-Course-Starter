@@ -10,7 +10,6 @@
 Dockerfile
 chromedriver.exe
 poetry.lock
-pyproject.toml
 requirements-test.txt
 setup.ps1
 setup.sh
