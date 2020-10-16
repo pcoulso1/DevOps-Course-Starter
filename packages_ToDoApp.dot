@@ -1,0 +1,16 @@
+digraph "packages_ToDoApp" {
+charset="utf-8"
+rankdir=BT
+"0" [label="app", shape="box"];
+"1" [label="item", shape="box"];
+"2" [label="status", shape="box"];
+"3" [label="trello_config", shape="box"];
+"4" [label="trello_items", shape="box"];
+"5" [label="view_model", shape="box"];
+"0" -> "4" [arrowhead="open", arrowtail="none"];
+"0" -> "5" [arrowhead="open", arrowtail="none"];
+"1" -> "2" [arrowhead="open", arrowtail="none"];
+"4" -> "1" [arrowhead="open", arrowtail="none"];
+"4" -> "3" [arrowhead="open", arrowtail="none"];
+"5" -> "2" [arrowhead="open", arrowtail="none"];
+}
