@@ -17,6 +17,12 @@ $ .\setup.ps1
 $ source setup.sh --windows
 ```
 
+Add poetry to your path, on Unix it is located at $HOME/.poetry/bin and on Windows at %USERPROFILE%\.poetry\bin and then install the dependecies
+
+```bash
+$ poetry install -n
+```
+
 Once the setup script has completed and all packages have been installed, start the Flask app by running:
 ```bash
 $ flask run
