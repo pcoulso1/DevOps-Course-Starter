@@ -1,0 +1,8 @@
+digraph "classes_ToDoApp" {
+charset="utf-8"
+rankdir=BT
+"0" [label="{Config|TRELLO_BASE_URL : NoneType\lTRELLO_KEY : NoneType\lTRELLO_TOKEN : NoneType\l|}", shape="record"];
+"1" [label="{Item|description : str\ldue : str\lid\lstatus : str\ltitle\lupdated : str\l|can_delete()\ldone_today()\ldue_date()\lfrom_card(cls, card, card_list)\lnext_status()\l}", shape="record"];
+"2" [label="{Status|DONE : str\lIN_PROGRESS : str\lTODO : str\l|}", shape="record"];
+"3" [label="{ViewModel|done_items\lin_progress_items\litems\lolder_done_items\lrecent_done_items\lshow_all_done_items\ltodo_items\l|}", shape="record"];
+}
