@@ -37,6 +37,9 @@ def driver():
     # path to your webdriver download
     opts = webdriver.ChromeOptions()
     opts.add_argument('--headless')
+    opts.add_argument('--headless')
+    opts.add_argument('--no-sandbox')
+    opts.add_argument('--disable-dev-shm-usage')
     
     # path to your webdriver download
     with webdriver.Chrome('chromedriver', options=opts) as driver:
