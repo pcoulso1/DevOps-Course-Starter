@@ -14,3 +14,4 @@ script:
 - docker build --target production --tag todo-app:$VERSION .
 - docker build --target test --tag todo-app-test:$VERSION .
 - docker images
+- docker run --rm -e FLASK_APP=$FLASK_APP -e FLASK_ENV=$FLASK_ENV -e TRELLO_BASE_URL=$TRELLO_BASE_URL -e TRELLO_KEY=$TRELLO_KEY -e TRELLO_TOKEN=$TRELLO_TOKEN todo-app-test:$VERSION -v tests
