@@ -1,2 +1,6 @@
+services:
+- docker
+
 script:
-- echo "hello world"
+- docker build --target test --tag todo-app-test:v1.0 .
+
