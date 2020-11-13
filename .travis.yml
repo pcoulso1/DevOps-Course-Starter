@@ -1,6 +1,15 @@
+env:
+  global:
+    - VERSION=v0.1
+    - FLASK_APP=app
+    - FLASK_ENV=development
+    - secure:
+
 services:
 - docker
 
 script:
-- docker build --target test --tag todo-app-test:v1.0 .
+- docker build --target production --tag todo-app:$VERSION .
 
+script:
+- docker build --target test --tag todo-app-test:$VERSION .
