@@ -13,8 +13,8 @@ services:
 script:
 - docker build --target production --tag todo-app:$VERSION .
 - docker build --target test --tag todo-app-test:$VERSION .
-- docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN todo-app-test:$VERSION test
-- docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN todo-app-test:$VERSION test_e2e
+- docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN todo-app-test:$VERSION tests
+- docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN todo-app-test:$VERSION tests_e2e
 
 notifications:
   email:
