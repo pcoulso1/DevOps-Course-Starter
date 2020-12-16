@@ -19,14 +19,8 @@ script:
 - docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN todo-app-test tests
 - docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN todo-app-test tests_e2e
 - echo $DOCKERHUB_PWD | docker login --username $DOCKER_NAMESPACE --password-stdin
-  on:
-    branch: master
 - docker push $DOCKER_NAMESPACE/todo-app
-  on:
-    branch: master
 - docker push $DOCKER_NAMESPACE/todo-app:$TRAVIS_COMMIT
-  on:
-    branch: master
 
 branches:
   only:
