@@ -1,8 +1,8 @@
 # Ignore files from the docker context
 **/__pycache__
 **/.coverage
-**/tests
 **/.coverage
+**/docs
 .gitignore
 .pytest_cache
 .vagrant
@@ -16,4 +16,4 @@ setup.sh
 Starter.code-workspace
 *.log
 Vagrantfile
-*.env*
+*.env
