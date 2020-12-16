@@ -14,19 +14,20 @@ services:
 
 jobs:
   include:
-    - stage: build
+    - stage: Build
       script:
       - docker build --target production --tag $DOCKER_NAMESPACE/todo-app .
       - docker build --target production --tag $DOCKER_NAMESPACE/todo-app:$TRAVIS_COMMIT .
       - docker build --target test --tag $DOCKER_NAMESPACE/todo-app-test .
+    - stage: Test
+      script:
       - docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN $DOCKER_NAMESPACE/todo-app-test tests
       - docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN $DOCKER_NAMESPACE/todo-app-test tests_e2e
-    - stage : deploy 
+    - stage : Deploy 
       script:
       - echo $DOCKERHUB_PWD | docker login --username $DOCKER_NAMESPACE --password-stdin
       - docker push $DOCKER_NAMESPACE/todo-app
       - docker push $DOCKER_NAMESPACE/todo-app:$TRAVIS_COMMIT
-      if: branch = master
 
 branches:
   only:
