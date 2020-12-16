@@ -28,8 +28,11 @@ script:
   on:
     branch: master
 
-
-
+branches:
+  only:
+  - master
+  - module-8
+    
 notifications:
   email:
     recipients:
