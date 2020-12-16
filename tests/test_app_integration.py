@@ -142,8 +142,9 @@ def test_add_get_endpoint(client):
     assert "<title>To-Do App</title>" in response_html
     assert "<h2>Add New Items</h2>" in response_html
 
+@mock.patch('requests.get', side_effect=mock_get_requests)
 @mock.patch('requests.post', side_effect=mock_post_requests)
-def test_add_post_endpoint(mock_post_requests, client):
+def test_add_post_endpoint(mock_get_requests, mock_post_requests, client):
     #given
     form = dict( 
         add='', 
