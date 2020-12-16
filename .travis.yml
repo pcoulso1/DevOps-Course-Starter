@@ -18,9 +18,9 @@ script:
 - docker build --target test --tag $DOCKER_NAMESPACE/todo-app-test .
 - docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN $DOCKER_NAMESPACE/todo-app-test tests
 - docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN $DOCKER_NAMESPACE/todo-app-test tests_e2e
-- if [ "$TRAVIS_BRANCH" = "master" ]; then echo $DOCKERHUB_PWD | docker login --username $DOCKER_NAMESPACE --password-stdin; fi
-- if [ "$TRAVIS_BRANCH" = "master" ]; then docker push $DOCKER_NAMESPACE/todo-app; fi
-- if [ "$TRAVIS_BRANCH" = "master" ]; then docker push $DOCKER_NAMESPACE/todo-app:$TRAVIS_COMMIT; fi
+- if [ "$TRAVIS_BRANCH" = "module-8" ]; then echo $DOCKERHUB_PWD | docker login --username $DOCKER_NAMESPACE --password-stdin; fi
+- if [ "$TRAVIS_BRANCH" = "module-8" ]; then docker push $DOCKER_NAMESPACE/todo-app; fi
+- if [ "$TRAVIS_BRANCH" = "module-8" ]; then docker push $DOCKER_NAMESPACE/todo-app:$TRAVIS_COMMIT; fi
 
 branches:
   only:
