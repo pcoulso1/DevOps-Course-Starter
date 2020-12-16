@@ -4,6 +4,7 @@ env:
   - FLASK_APP=app
   - FLASK_ENV=development
   - TRELLO_BASE_URL=https://api.trello.com/1
+  - DOCKER_NAMESPACE=pcoulso1
   - secure: lqZcdYc+v7glkDRV19vVdnIDuiKKniO0RwULP0iw0BGsLk8gvaSnzOQgZP8e73aLMKdJmbIY9OnXTeCXO2J9P0u338ydWwN824wSZPoxGUSQbf3jnk9SB8hrL6LLQjeV/vpejvLR0n+jqk3Lcg1nCTQKZvkriX8h8ZwY5GrmKodewBe629UCoTVJkZuRf6BewRna0D0xr2lzIeSKSBZfmMJNr0Sk91ovuw7oAknN05Dl3WYUZi+HT77Z4SIfqZwNUe0ycTrV2pMm5VqDxjUSB4zhtt1yaHfv9g3jrD6xq9iXuoIySraMY4nN6+n+tU6v98sYhImhyDTy91MnTs3nP/vm7P8YYPl26/Khe5tA+KgzEtRNUtd46EFJDTV0xrUX38XSiN8kamy3033zcKvjMcZa1fW3KfmFZt9fEm/cQzU6qq+aI7GWMcYyXwMLpyHLsQQ8GP2DhOrrCoCD5uOHuMi8zHmT/ERIGXkiso/ntZWmev9aujpP8XsSbbHA6vN/qIiADAKhFLKaePuzJJis6bA+CdwarTDnywq0M5M7p6BTAXvH8A+vBgKGrCpdIjSVlP3y/3bGs7dTuVGONPxjXf5GxXxS8wwDuxwh1tqezh9MVY05k7XRq2hhJf54e43dROVD2X//9spjGC9q4E7bPpBJQwBqrT/p1N7z+JZ4qDo=
   - secure: 2BMPPMWBeHPaIhoS17oZ7a+sLoDyskRDYAjbLHj6DfTvhvMepCsuGVjgiAkt3LoNOabc4q5pZqg0Msu73dcKBYtpklEJ4gfc9t9q9yHa2PaRz6xHp3uj1XDz1fWij3jPg1lVF6Z+7CdNXPYcNohAxKYOOzEeBRuJHZr94OItjUoB2nySGkv4NEJ/5oZz+ubjwfN90GsYf3CXu7v7PMkNwBtuJoO2aXW57HieLNZHpjSXTCvz/mrCjysmn97tZVeWj8Thp9b4AFBfxSyzDuz+9uB6zARzCg0nUqiifgoxvkilLx/k5Q7UyXmyjI8tT9re8z7uOaj6Z4AfRnYYuWLXar+ABFgwdLRgFOomG8gprG/SxYKUoc9uifjc0PC94UqdprnIpyI8S7/n8hk7t8smovhVnk2SrlOIsAg+VKW7DC6k2c2V/EmDObkKNBdnLqTj6reixVAfrNEa/j1oK4CNT3WwXfnZyEoD7Zfj2007K9cWvWYuu0PdEqL0njcpFl4SOqomms6BwTb6S/8T+Erhg00ZBSoeWmtd2I1m+tcwgm1kXfi6LlYJ57e0aJq8A0nXflEHUEOqiNvoksM2wkinBIZInb+9BnFk6gNLwGQbYHx0CtptFuk0A/ouAPYOf0ZdX7HMOfsLeBbNJFEf//Cm87B1CL8rpU9lJHNlsP2xgKI=
   - secure: v5mGm2scI7wdxvDfJl9KKs+3JImErlOGntK7fz1fO5EK/PAhFC8KXa4M43zNhnt075JCAufLPPiT6wBfwwgM4QL3YEAvxzD02I1x6RrGr3U8yAwZbrmg7aLC2pSxEuCTZAjxkaGcMOXOTlMqMxBRPsqTcN2gSgKzsdGMSh+pmZ7wOKZAQWh56QkLUmCZ4QbNVeiPS5nMy1guQYADN/fGDMg7c3Q9FLmp4dV8hFFru0RXiIPneVK+Y9vFWPgNGVlgCwIbzZ5yZzcILOz/dMIS/wWDM+hUt0WSd9Px7xsYOvu9xAh7hRLSM/QfJa3XafmmrshrhxZYNwxa7ZjcsJYRYR1e//TbNooxiBqeV7wIdtoJJXvAwA0D69RN/3ek42Cs824bpwi5/erTwNLA6k1nutrAQ00epWYdKH1W5JHeX/ASgV4rRyIkNlmBbQbYApIKPBaJ+l+1iza46V0Lj3zkvyR5Y+lEieeTihd8MLIdWQvWReQtvAArUXgmZqeIHtJDq8HapO9dpkOlREjwha8h4/h8KMJ8AH9KU0ArbvCDq1Lz9GJCoj9+Lp/SvcS2AtRPFTzX1PHDeYWo02vh5UjLv6l9bp2Ot322qb67HLYXqqILZ53Ul4YRt4XFliiHoVxvbnEsCcmhVyDTz6S15wK+JS+mwRF2TbAPWAuj10zRXbA=
@@ -12,7 +13,22 @@ services:
 - docker
 
 script:
-- echo $DOCKERHUB_PWD | docker login --username pcoulso1 --password-stdin
+- docker build --target production --tag $DOCKER_NAMESPACE/todo-app .
+- docker build --target production --tag $DOCKER_NAMESPACE/todo-app:$TRAVIS_COMMIT .
+- docker build --target test --tag $DOCKER_NAMESPACE/todo-app-test .
+- docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN todo-app-test tests
+- docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN todo-app-test tests_e2e
+- echo $DOCKERHUB_PWD | docker login --username $DOCKER_NAMESPACE --password-stdin
+  on:
+    branch: master
+- docker push $DOCKER_NAMESPACE/todo-app
+  on:
+    branch: master
+- docker push $DOCKER_NAMESPACE/todo-app:$TRAVIS_COMMIT
+  on:
+    branch: master
+
+
 
 notifications:
   email:
