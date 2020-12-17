@@ -18,6 +18,9 @@ services:
 script:
 - docker build --target production --tag $DOCKER_NAMESPACE/$DOCKER_APP .
 - docker tag $DOCKER_NAMESPACE/$DOCKER_APP $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT
+- docker build --target test --tag $DOCKER_NAMESPACE/$DOCKER_APP-test .
+- docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN $DOCKER_NAMESPACE/$DOCKER_APP-test tests
+- docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN $DOCKER_NAMESPACE/$DOCKER_APP-test tests_e2e
 - echo $DOCKERHUB_PWD | docker login --username $DOCKER_NAMESPACE --password-stdin;
 - docker push $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT;
 - if [ "$TRAVIS_BRANCH" = "master" ]; then docker push $DOCKER_NAMESPACE/$DOCKER_APP; fi
@@ -32,7 +35,7 @@ deploy:
       export HEROKU_API_KEY=$HEROKU_PWD &&
       /usr/local/bin/heroku container:release --app dev-ops-todo-app web
     on:
-      branch: module-8
+      branch: master
 
 branches:
   only:
