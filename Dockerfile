@@ -47,12 +47,11 @@ FROM python:3-buster as test
 WORKDIR /usr/src/app
 
 ENV POETRY_HOME=/etc/poetry 
-ENV PATH=${POETRY_HOME}/bin:${PATH}/usr/src/app
+ENV PATH=${POETRY_HOME}/bin:${PATH}:/usr/src/app
 
 # Install Chrome and WebDriver
 RUN apt-get update &&\
     wget -q -O- https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python &&\
-    chmod -R 755 ${POETRY_HOME} &&\
     curl -sSL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o chrome.deb &&\
     apt-get install ./chrome.deb -y &&\
     rm ./chrome.deb &&\
