@@ -18,23 +18,16 @@ services:
 script:
 - docker build --target production --tag $DOCKER_NAMESPACE/$DOCKER_APP .
 - docker tag $DOCKER_NAMESPACE/$DOCKER_APP $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT
-- docker build --target test --tag $DOCKER_NAMESPACE/$DOCKER_APP-test .
-- docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN $DOCKER_NAMESPACE/$DOCKER_APP-test tests
-- docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN $DOCKER_NAMESPACE/$DOCKER_APP-test tests_e2e
 - echo $DOCKERHUB_PWD | docker login --username $DOCKER_NAMESPACE --password-stdin;
 - docker push $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT;
 - docker push $DOCKER_NAMESPACE/$DOCKER_APP;
 
 deploy:
   - provider: script
-    script: echo "hello"
-    on:
-      branch: module-8
-  - provider: script
     script: 
-    - echo $HEROKU_PWD | docker login --username=_ --password-stdin registry.heroku.com
-    - docker tag $DOCKER_NAMESPACE/$DOCKER_APP registry.heroku.com/$HEROKU_APP/web
-    - docker push registry.heroku.com/$HEROKU_APP/web
+      echo $HEROKU_PWD | docker login --username=_ --password-stdin registry.heroku.com &&
+      docker tag $DOCKER_NAMESPACE/$DOCKER_APP registry.heroku.com/$HEROKU_APP/web &&
+      docker push registry.heroku.com/$HEROKU_APP/web
     on:
       branch: module-8
 
