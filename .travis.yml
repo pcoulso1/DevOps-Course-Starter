@@ -27,11 +27,16 @@ script:
 
 deploy:
   - provider: script
+    script: echo "hello"
+    on:
+      branch: module-8
+  - provider: script
     script: 
     - echo $HEROKU_PWD | docker login --username=_ --password-stdin registry.heroku.com
     - docker tag $DOCKER_NAMESPACE/$DOCKER_APP registry.heroku.com/$HEROKU_APP/web
     - docker push registry.heroku.com/$HEROKU_APP/web
-
+    on:
+      branch: module-8
 
 branches:
   only:
