@@ -2,8 +2,13 @@ FROM python:3-alpine as base
 
 WORKDIR /usr/src/app
 
-RUN wget -q -O- https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
-ENV PATH=/root/.poetry/bin:${PATH}
+ENV POETRY_HOME=/etc/poetry 
+ENV PORT=5000
+
+RUN wget -q -O- https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python && \
+    chmod -R 755 ${POETRY_HOME}
+
+ENV PATH=${POETRY_HOME}/bin:${PATH}
 
 ################## 
 # Production stage
@@ -14,10 +19,13 @@ COPY *.py *.lock *.toml *.md ./
 COPY templates ./templates
 
 # Install dependencies
-RUN poetry install --no-dev -n
+RUN poetry config virtualenvs.create false --local &&\
+    poetry install --no-dev -n
+
+RUN chmod -R 777 poetry.toml
 
 # Setup run command 
-CMD [ "poetry", "run", "gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:create_app()"]
+CMD [ "sh", "-c", "poetry run gunicorn -w 4 -b 0.0.0.0:$PORT 'app:create_app()'" ]
 
 ################## 
 # Development stage
@@ -27,7 +35,8 @@ FROM base as development
 COPY --from=production /usr/src/app/pyproject.toml pyproject.toml
 
 # Install dependencies
-RUN poetry install -n
+RUN poetry config virtualenvs.create false --local &&\
+    poetry install -n
 
 # Setup run command 
 CMD [ "poetry", "run", "flask", "run", "--host=0.0.0.0"]
@@ -38,7 +47,12 @@ FROM python:3-buster as test
 
 WORKDIR /usr/src/app
 
-ENV PATH=/root/.poetry/bin:${PATH}:/usr/src/app
+ENV POETRY_HOME=/etc/poetry 
+
+RUN wget -q -O- https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python && \
+    chmod -R 755 ${POETRY_HOME}
+
+ENV PATH=${POETRY_HOME}/bin:${PATH}/usr/src/app
 
 # Install Chrome and WebDriver
 RUN apt-get update && \
