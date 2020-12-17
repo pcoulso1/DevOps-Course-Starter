@@ -28,7 +28,7 @@ deploy:
       echo $HEROKU_PWD | docker login --username=_ --password-stdin registry.heroku.com &&
       docker tag $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT registry.heroku.com/$HEROKU_APP/web &&
       docker push registry.heroku.com/$HEROKU_APP/web &&
-      wget -qO- https://toolbelt.heroku.com/install.sh | sh &&
+      wget -qO- https://cli-assets.heroku.com/install.sh | sh &&
       export HEROKU_API_KEY=$HEROKU_PWD &&
       /usr/local/heroku/bin/heroku container:release --app dev-ops-todo-app web
     on:
