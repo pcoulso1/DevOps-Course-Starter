@@ -24,9 +24,9 @@ script:
 - docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN $DOCKER_NAMESPACE/$DOCKER_APP-test tests_e2e
 - echo $DOCKERHUB_PWD | docker login --username $DOCKER_NAMESPACE --password-stdin;
 - docker push $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT;
-- if [ "$TRAVIS_BRANCH" = "master" ]; then docker push $DOCKER_NAMESPACE/$DOCKER_APP; fi
-- if [ "$TRAVIS_BRANCH" = "master" ]; then echo $HEROKU_PWD | docker login --username=_ --password-stdin; fi
-- if [ "$TRAVIS_BRANCH" = "master" ]; then docker push registry.heroku.com/$HEROKU_APP/web; fi
+- if [ "$TRAVIS_BRANCH" = "module-8" ]; then docker push $DOCKER_NAMESPACE/$DOCKER_APP; fi
+- if [ "$TRAVIS_BRANCH" = "module-8" ]; then echo $HEROKU_PWD | docker login --username=_ --password-stdin; fi
+- if [ "$TRAVIS_BRANCH" = "module-8" ]; then docker push registry.heroku.com/$HEROKU_APP/web; fi
 
 branches:
   only:
