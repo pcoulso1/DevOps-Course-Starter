@@ -57,7 +57,8 @@ RUN apt-get update && \
 COPY ./ ./
 
 # Install dependencies
-RUN poetry install -n
+RUN poetry config virtualenvs.create false --local &&\
+    poetry install -n
 
 # Setup the entry point
 ENTRYPOINT ["poetry", "run", "pytest"]
