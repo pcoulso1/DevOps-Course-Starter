@@ -30,7 +30,7 @@ deploy:
       docker push registry.heroku.com/$HEROKU_APP/web &&
       wget -qO- https://cli-assets.heroku.com/install.sh | sh &&
       export HEROKU_API_KEY=$HEROKU_PWD &&
-      /usr/local/heroku/bin/heroku container:release --app dev-ops-todo-app web
+      /usr/local/bin/heroku container:release --app dev-ops-todo-app web
     on:
       branch: module-8
 
