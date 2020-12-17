@@ -2,13 +2,12 @@ FROM python:3-alpine as base
 
 WORKDIR /usr/src/app
 
-ENV POETRY_HOME=/etc/poetry 
-ENV PORT=5000
+ENV POETRY_HOME=/etc/poetry \
+    PORT=5000 \
+    PATH=${POETRY_HOME}/bin:${PATH}
 
 RUN wget -q -O- https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python && \
     chmod -R 755 ${POETRY_HOME}
-
-ENV PATH=${POETRY_HOME}/bin:${PATH}
 
 ################## 
 # Production stage
@@ -47,25 +46,22 @@ FROM python:3-buster as test
 
 WORKDIR /usr/src/app
 
-ENV POETRY_HOME=/etc/poetry 
-
-RUN wget -q -O- https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python && \
-    chmod -R 755 ${POETRY_HOME}
-
-ENV PATH=${POETRY_HOME}/bin:${PATH}/usr/src/app
+ENV POETRY_HOME=/etc/poetry \
+    PATH=${POETRY_HOME}/bin:${PATH}/usr/src/app
 
 # Install Chrome and WebDriver
-RUN apt-get update && \
- wget -q -O- https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python &&\
- curl -sSL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o chrome.deb &&\
- apt-get install ./chrome.deb -y &&\
- rm ./chrome.deb &&\
- LATEST=`curl -sSL https://chromedriver.storage.googleapis.com/LATEST_RELEASE` &&\
- echo "Installing chromium webdriver version ${LATEST}" &&\
- curl -sSL https://chromedriver.storage.googleapis.com/${LATEST}/chromedriver_linux64.zip -o chromedriver_linux64.zip &&\
- apt-get install unzip -y &&\
- unzip ./chromedriver_linux64.zip &&\
- apt-get clean
+RUN apt-get update &&\
+    wget -q -O- https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python &&\
+    chmod -R 755 ${POETRY_HOME} &&\
+    curl -sSL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o chrome.deb &&\
+    apt-get install ./chrome.deb -y &&\
+    rm ./chrome.deb &&\
+    LATEST=`curl -sSL https://chromedriver.storage.googleapis.com/LATEST_RELEASE` &&\
+    echo "Installing chromium webdriver version ${LATEST}" &&\
+    curl -sSL https://chromedriver.storage.googleapis.com/${LATEST}/chromedriver_linux64.zip -o chromedriver_linux64.zip &&\
+    apt-get install unzip -y &&\
+    unzip ./chromedriver_linux64.zip &&\
+    apt-get clean
 
 # Copy all files
 COPY ./ ./

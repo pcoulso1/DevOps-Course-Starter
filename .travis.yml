@@ -30,7 +30,7 @@ deploy:
   # deploy master to production
   - provider: script
     script: 
-      - echo $HEROKU_PWD | docker login --username=_ --password-stdin
+      - echo $HEROKU_PWD | docker login --username=_ --password-stdin registry.heroku.com
       - docker push registry.heroku.com/$HEROKU_APP/web
     on:
       branch: module-8
