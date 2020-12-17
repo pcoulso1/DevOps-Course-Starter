@@ -3,8 +3,8 @@ FROM python:3-alpine as base
 WORKDIR /usr/src/app
 
 ENV POETRY_HOME=/etc/poetry \
-    PORT=5000 \
-    PATH=${POETRY_HOME}/bin:${PATH}
+    PORT=5000
+ENV PATH=/etc/poetry/bin:${PATH}
 
 RUN wget -q -O- https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python && \
     chmod -R 755 ${POETRY_HOME}
@@ -46,8 +46,8 @@ FROM python:3-buster as test
 
 WORKDIR /usr/src/app
 
-ENV POETRY_HOME=/etc/poetry \
-    PATH=${POETRY_HOME}/bin:${PATH}/usr/src/app
+ENV POETRY_HOME=/etc/poetry 
+ENV PATH=${POETRY_HOME}/bin:${PATH}/usr/src/app
 
 # Install Chrome and WebDriver
 RUN apt-get update &&\
