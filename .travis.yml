@@ -7,10 +7,14 @@ env:
   - DOCKER_NAMESPACE=pcoulso1
   - DOCKER_APP=todo-app
   - HEROKU_APP=dev-ops-todo-app
+  # Secret for TRELLO_KEY
   - secure: lqZcdYc+v7glkDRV19vVdnIDuiKKniO0RwULP0iw0BGsLk8gvaSnzOQgZP8e73aLMKdJmbIY9OnXTeCXO2J9P0u338ydWwN824wSZPoxGUSQbf3jnk9SB8hrL6LLQjeV/vpejvLR0n+jqk3Lcg1nCTQKZvkriX8h8ZwY5GrmKodewBe629UCoTVJkZuRf6BewRna0D0xr2lzIeSKSBZfmMJNr0Sk91ovuw7oAknN05Dl3WYUZi+HT77Z4SIfqZwNUe0ycTrV2pMm5VqDxjUSB4zhtt1yaHfv9g3jrD6xq9iXuoIySraMY4nN6+n+tU6v98sYhImhyDTy91MnTs3nP/vm7P8YYPl26/Khe5tA+KgzEtRNUtd46EFJDTV0xrUX38XSiN8kamy3033zcKvjMcZa1fW3KfmFZt9fEm/cQzU6qq+aI7GWMcYyXwMLpyHLsQQ8GP2DhOrrCoCD5uOHuMi8zHmT/ERIGXkiso/ntZWmev9aujpP8XsSbbHA6vN/qIiADAKhFLKaePuzJJis6bA+CdwarTDnywq0M5M7p6BTAXvH8A+vBgKGrCpdIjSVlP3y/3bGs7dTuVGONPxjXf5GxXxS8wwDuxwh1tqezh9MVY05k7XRq2hhJf54e43dROVD2X//9spjGC9q4E7bPpBJQwBqrT/p1N7z+JZ4qDo=
+  # Secret for TRELLO_TOKEN
   - secure: 2BMPPMWBeHPaIhoS17oZ7a+sLoDyskRDYAjbLHj6DfTvhvMepCsuGVjgiAkt3LoNOabc4q5pZqg0Msu73dcKBYtpklEJ4gfc9t9q9yHa2PaRz6xHp3uj1XDz1fWij3jPg1lVF6Z+7CdNXPYcNohAxKYOOzEeBRuJHZr94OItjUoB2nySGkv4NEJ/5oZz+ubjwfN90GsYf3CXu7v7PMkNwBtuJoO2aXW57HieLNZHpjSXTCvz/mrCjysmn97tZVeWj8Thp9b4AFBfxSyzDuz+9uB6zARzCg0nUqiifgoxvkilLx/k5Q7UyXmyjI8tT9re8z7uOaj6Z4AfRnYYuWLXar+ABFgwdLRgFOomG8gprG/SxYKUoc9uifjc0PC94UqdprnIpyI8S7/n8hk7t8smovhVnk2SrlOIsAg+VKW7DC6k2c2V/EmDObkKNBdnLqTj6reixVAfrNEa/j1oK4CNT3WwXfnZyEoD7Zfj2007K9cWvWYuu0PdEqL0njcpFl4SOqomms6BwTb6S/8T+Erhg00ZBSoeWmtd2I1m+tcwgm1kXfi6LlYJ57e0aJq8A0nXflEHUEOqiNvoksM2wkinBIZInb+9BnFk6gNLwGQbYHx0CtptFuk0A/ouAPYOf0ZdX7HMOfsLeBbNJFEf//Cm87B1CL8rpU9lJHNlsP2xgKI=
+  # Secret for DOCKERHUB_PWD
   - secure: v5mGm2scI7wdxvDfJl9KKs+3JImErlOGntK7fz1fO5EK/PAhFC8KXa4M43zNhnt075JCAufLPPiT6wBfwwgM4QL3YEAvxzD02I1x6RrGr3U8yAwZbrmg7aLC2pSxEuCTZAjxkaGcMOXOTlMqMxBRPsqTcN2gSgKzsdGMSh+pmZ7wOKZAQWh56QkLUmCZ4QbNVeiPS5nMy1guQYADN/fGDMg7c3Q9FLmp4dV8hFFru0RXiIPneVK+Y9vFWPgNGVlgCwIbzZ5yZzcILOz/dMIS/wWDM+hUt0WSd9Px7xsYOvu9xAh7hRLSM/QfJa3XafmmrshrhxZYNwxa7ZjcsJYRYR1e//TbNooxiBqeV7wIdtoJJXvAwA0D69RN/3ek42Cs824bpwi5/erTwNLA6k1nutrAQ00epWYdKH1W5JHeX/ASgV4rRyIkNlmBbQbYApIKPBaJ+l+1iza46V0Lj3zkvyR5Y+lEieeTihd8MLIdWQvWReQtvAArUXgmZqeIHtJDq8HapO9dpkOlREjwha8h4/h8KMJ8AH9KU0ArbvCDq1Lz9GJCoj9+Lp/SvcS2AtRPFTzX1PHDeYWo02vh5UjLv6l9bp2Ot322qb67HLYXqqILZ53Ul4YRt4XFliiHoVxvbnEsCcmhVyDTz6S15wK+JS+mwRF2TbAPWAuj10zRXbA=
-  - secure: 4g6DececfyooNpoOAsoeiek9Y1GMWi/j03z21VN9WzEWtDPmSpjOa3A/ZPm8e88Davftp1dyCTy16bR3PtfyajiixNaTUnOlvyaDYa8fy+xCEIs/zcXDoYvLWaYwAC4/+CFli5hv8HHc6xRfqnZZhiz056qG+JE9lj66yregkrxEgiwtjOOhzx/HOU4sH3z+Q4SWV7wa6F5BiIvUrrAOe2SveWRl7QRtm3vYObGHJ5m8GHFfu2ndx1nIrgkfUd6OJxkFmolEueVQGpCHh1eAgzM9RIhLWc6zQpGhKOC/izvr17lJHr9bFVOMeIFN2fhKL1zKpEYLPQ1OKyQBPRvjVb0J/RnwhE8uWpCzFAfjq580pTyWKMx+uzW6BhLSDLNX6sTneDD1QRaJ3Roe/gEzeO5/Gy0xxnPP87HDaIbFvfF2CCbgbnFi+s8z/kuvL0xFGnqewmvZ49H4DFGx0QQF4UZTAtNTEwQ8B6D0coOfs5GtR55mLptmZjj/c3IiNyqLVNVwLN9lLxF3hIxIleluzwItCFC40W2oUqlhptuT/fhBIYIOtPz5YMxegts/zcZc3q2v36joTUzH3QtdisDawWimbwxtw227csYJDi4rghvhnwYRNPPK0/yWJqveAx8R1tgoUe59TxWgU4xZs5bMUA1KU46ieOIG7w1Q+gO96i4=
+  # Secret for HEROKU_API_KEY
+  - secure: ntNKVgg8INALzPNi+wkmanRFGTNrCQzPfVycmWbe1Pls3jQEC98Z6lhUcBpxY/+vsv0ZyKmYH06MTvpcOgKxFY3wdq5MliMcOWKyYoZWPK2M/9MzuNZxkDKvJNhhc8oxbkB3zJCpDWf6dm7nucIZ5OcJjOu4WrLspdsjERIrgODGZu3/ico7VM0q3jQPjdyogsgvRSJ+MqfcJeNJpJi0dUCmIVT368BKJlgS7cf2jFZtwwNcNskMeV3Ej8p1Iq5DWfPcyGe84ejhG+J2s8sCkobD/dMmoGIrSnvtx3ACI4Nu/WuGjB4gJyl4T8ElVCgkIy5Dn4tEzCc/fMhaJKoveyNw+cUEevCDcGEw2+eVegymLAwUV1sr/N1NtWG8/ucgxjn2wRKrsLKKb7sKvjaKP2fzl2LVEo1GvsbykHbwlqjjFPLVTXMYr3GCq/X7UcUH8uxEo7gOD6bTdAP/YtOC18q1by+vy/+zAOW0/RgjbjOJQLfrBH5Q4fVquN59uotNO+Bc22iyCtO226ViKlNaPC+X9xDS0OV6GfARlKRhKKUvIDLi3l7oMBuzKr6cQBMf7oyDdr0KQUbpFXYpAiikkXFp8wMtks7WNg28HjWdHaQIoeQqyaTqptZwv2B9NNc67x2jQtRl3asr246RTGRCjJ2z6Z5Oc4eOBTKHyVybZbU=
 
 services:
 - docker
@@ -21,18 +25,17 @@ script:
 - docker build --target test --tag $DOCKER_NAMESPACE/$DOCKER_APP-test .
 - docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN $DOCKER_NAMESPACE/$DOCKER_APP-test tests
 - docker run --rm -e FLASK_APP -e FLASK_ENV -e TRELLO_BASE_URL -e TRELLO_KEY -e TRELLO_TOKEN $DOCKER_NAMESPACE/$DOCKER_APP-test tests_e2e
-- echo $DOCKERHUB_PWD | docker login --username $DOCKER_NAMESPACE --password-stdin;
-- docker push $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT;
+- echo $DOCKERHUB_PWD | docker login --username $DOCKER_NAMESPACE --password-stdin
+- docker push $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT
 - if [ "$TRAVIS_BRANCH" = "master" ]; then docker push $DOCKER_NAMESPACE/$DOCKER_APP; fi
 
 deploy:
   - provider: script
     script: 
-      echo $HEROKU_PWD | docker login --username=_ --password-stdin registry.heroku.com &&
+      echo $HEROKU_API_KEY | docker login --username=_ --password-stdin registry.heroku.com &&
       docker tag $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT registry.heroku.com/$HEROKU_APP/web &&
       docker push registry.heroku.com/$HEROKU_APP/web &&
       wget -qO- https://cli-assets.heroku.com/install.sh | sh &&
-      export HEROKU_API_KEY=$HEROKU_PWD &&
       /usr/local/bin/heroku container:release --app dev-ops-todo-app web
     on:
       branch: master
