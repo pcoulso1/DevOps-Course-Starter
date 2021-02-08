@@ -83,17 +83,16 @@ def test_due_date_without_date():
     #then
     assert item.due_date() == ""
 
-def test_from_card():
+def test_from_json():
     #given
-    card = { 'id': 'theId',
+    json = { '_id': 'theId',
              'name': 'theName',
              'desc': 'theDescription',
              'due': '26/09/2020',
              'dateLastActivity': '2020-07-02T07:39:25.531Z'}
-    card_list = { 'name': Status.TODO }
 
     #when
-    item = Item.from_card(card, card_list)
+    item = Item.from_json(json, Status.TODO)
 
     #then
     assert item.id == 'theId'

@@ -25,7 +25,7 @@ $ poetry install -n
 
 Once the setup script has completed and all packages have been installed, start the Flask app by running:
 ```bash
-$ flask run
+$ poetry run flask run
 ```
 
 You should see output similar to the following:
@@ -40,15 +40,23 @@ You should see output similar to the following:
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
 
-## Trello setup
-To run the application you will need to create a Trello account and API key. In order to call their API, you need to first [create an account](https://trello.com/signup), then generate an API key and token by following the [instructions here](https://trello.com/app-key).
+To run VSCode in the virtual enviroment created by poetry, run the following commands;
+```bash
+$ poetry shell
+$ code .
+```
 
-For production application a named "ToDoBoard" is required with three lists named;
+## MongoDB setup
+The application uses MongoDB as it's backing store. During development the [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) service was used which provided a 'free to use' MongoDB cluster that the application can use. To create a MongoDB Atlas cluster sign-up [here](https://www.mongodb.com/try) and select the "I'm learning MongoDB" option.
+
+Select any of the Free to use Cloud vendors (during development the cloud vendor AWS was used in the eu-west-1 region). When creating the cluster select the 'username and password' authentication method, and ensure the correct IP range is added to ensure your application can connect.
+
+For production application the "todoBoard" database will be created with the following collections;
 * ToDo
 * InProgress
 * Done
 
-To run the e2e tests a "TestBoard" is required with three lists named; 
+To run the e2e tests the "testBoard" database will be created with the following collections; 
 * ToDo
 * InProgress
 * Done
@@ -56,10 +64,11 @@ To run the e2e tests a "TestBoard" is required with three lists named;
 ## Notes
 
 The `.env` file is used by flask to set environment variables when running `flask run`. This enables things like developement mode (which also enables features like hot reloading when you make a file change).
-There's also a number of variables which are used to connect to Trello;
-* TRELLO_BASE_URL - the URL of the Trello api server e.g. https://api.trello.com/1
-* TRELLO_KEY - the Trello key (please Trello setup)
-* TRELLO_TOKEN - the Trello key (please Trello setup)
+There's also a number of variables which are used to connect to MongoDb;
+* MONGO_HOST - the host of the MongoDB cluster e.g. cluster0.xrdya.mongodb.net
+* MONGO_USER_NAME - the username used to connect to MongoDB (please MongoDB setup)
+* MONGO_PASSWORD - the password used to connect to MongoDB (please MongoDB setup)
+* MONGO_DEFAULT_DATABASE - the database which the application will used, default to todoBoard (please MongoDB setup)
 
 When running `setup.sh`, the `.env.template` file will be copied to `.env` if the latter does not exist.
 
@@ -67,12 +76,12 @@ When running `setup.sh`, the `.env.template` file will be copied to `.env` if th
 This project uses pytest.
 
 ```bash
-pytest -v tests/
+poetry run pytest -v tests/
 ```
 You may need to install requirements for setup beforehand, using
 
 ```bash
-pip install -r requirements-test.txt
+poetry install
 ```
 The e2e tests require the chromedriver to run. This can be downloaded from [here](https://sites.google.com/a/chromium.org/chromedriver/downloads) and placed in top level of the project directory  
 

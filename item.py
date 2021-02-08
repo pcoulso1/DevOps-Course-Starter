@@ -2,7 +2,7 @@ from datetime import date, datetime
 from status import Status
 class Item:
 
-    def __init__(self, id, title, status='ToDo', description='', due='', updated=''):
+    def __init__(self, id, title, status=Status.TODO, description='', due='', updated=''):
         self.id = id
         self.title = title
         self.description = description
@@ -12,16 +12,16 @@ class Item:
 
     def can_delete(self):
         """
-        Returns if the Item is in the correct state to be  deleted
+        Returns if the Item is in the correct state to be deleted
     
         Returns:
             bool: An instance of the Item class.
         """
-        return self.status == 'Done'
+        return self.status == Status.DONE
 
     def next_status(self):
         """
-        Returns the next logical state the item can can be moved to
+        Returns the next logical state the item can be moved to
     
         Returns:
             String: The name of the next state the item can be moved to.
@@ -54,16 +54,16 @@ class Item:
         return self.status == Status.DONE and datetime.strptime(self.updated, '%Y-%m-%dT%H:%M:%S.%fZ').date() == date.today()
 
     @classmethod
-    def from_card(cls, card, card_list):
+    def from_json(cls, json, listname):
         """
-        Initialize an Item from an instance of a trello card
+        Initialize an Item from an instance of the bacnking store json
     
         Args:
-            card: The trello card object.
-            card_list: The trello card list object which the card belongs to.
+            json: The todo item in json.
+            listname: The name of the list the item belongs to.
 
         Returns:
             cls: An instance of the Item class.
         """
-        return cls(card['id'], card['name'], card_list['name'],card['desc'], card['due'], card['dateLastActivity'])
+        return cls(json['_id'], json['name'], listname, json['desc'], json['due'], json['dateLastActivity'])
 

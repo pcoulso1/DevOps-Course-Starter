@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from view_model import ViewModel
 import logging
-import trello_items as item_store
+import mongo_items as item_store
 
 def create_app():
     app = Flask(__name__)
@@ -34,9 +34,22 @@ def create_app():
         return render_template('add.html')
 
 
-    @app.route('/delete/<id>', methods=['POST'])
-    @app.route('/delete/<id>', methods=['GET'])
+    @app.route('/editdetails/<id>', methods=['GET', 'POST'])
+    def editdetails(id):                                                   # pylint: disable=unused-variable
+        if request.method == 'POST':
+            if 'edit' in request.form:
+                app.logger.info(f'Editing item id={id}')                   # pylint: disable=no-member
+                item_store.edit_item(id, 
+                    request.form.get('todo_title'),
+                    request.form.get('todo_description'),
+                    request.form.get('todo_due'))
+            return redirect("/")
+
+        return render_template('editdetails.html', item=item_store.get_item(id))
+
+    @app.route('/delete/<id>', methods=['GET', 'POST'])
     def delete(id):                                                         # pylint: disable=unused-variable
+        print(f"in delete removing {id}")
         if request.method == 'POST':
             if 'delete' in request.form:
                 app.logger.info(f'Deleting item id={id}')                   # pylint: disable=no-member
