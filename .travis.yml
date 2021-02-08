@@ -44,7 +44,6 @@ deploy:
 branches:
   only:
   - master
-  - module-8
 
 notifications:
   email:
