@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for
 from view_model import ViewModel
 import logging
-import mongo_items as item_store
+from mongo_db.item_store import ItemStore
 
-def create_app():
+def create_app(items = ItemStore()):
     app = Flask(__name__)
     logging.basicConfig(level=logging.INFO)
+    item_store = items
 
     @app.route('/')
     def index():                                                            # pylint: disable=unused-variable

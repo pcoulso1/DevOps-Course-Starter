@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv(dotenv_path='.env')
 
 import app
-import mongo_items as item_store
+from mongo_db.item_store import ItemStore
 
 from selenium import webdriver
 
@@ -16,10 +16,11 @@ def test_app():
     # Create the new board & update the board id environment variable
 
     # Setup the test boards
+    item_store = ItemStore()
     item_store.setup_test_store()
 
     # construct the new application
-    application = app.create_app() 
+    application = app.create_app(item_store) 
     # start the app in its own thread.
     thread = Thread(target=lambda: application.run(use_reloader=False))
     thread.daemon = True

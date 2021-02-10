@@ -3,8 +3,8 @@ charset="utf-8"
 rankdir=BT
 "0" [label="app", shape="box"];
 "1" [label="item", shape="box"];
-"2" [label="mongo_config", shape="box"];
-"3" [label="mongo_items", shape="box"];
+"2" [label="mongo_db.config", shape="box"];
+"3" [label="mongo_db.item_store", shape="box"];
 "4" [label="status", shape="box"];
 "5" [label="view_model", shape="box"];
 "0" -> "3" [arrowhead="open", arrowtail="none"];

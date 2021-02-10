@@ -8,19 +8,19 @@ from dotenv import load_dotenv
 load_dotenv(dotenv_path='.env')
 
 import app
-from mongo_config import Config
+from mongo_db.config import Config
 
 @pytest.fixture
 def client():
     test_app = app.create_app()
-
+    
     with test_app.test_client() as client:
         yield client
 
 def mock_mongoDb_client(*args, **kwargs):
 
-    client = mongomock.MongoClient()
-    db = client[Config().MONGO_DEFAULT_DATABASE]
+    dbclient = mongomock.MongoClient()
+    db = dbclient[Config().MONGO_DEFAULT_DATABASE]
 
     mockToDoItems = [
         {'_id': ObjectId('5efcab153d4408623d3a0481'), 'name': 'Test task1', 'desc': 'Test in todo',
@@ -52,7 +52,7 @@ def mock_mongoDb_client(*args, **kwargs):
     ]
     db[Status.DONE].insert_many(mockDoneItems)
 
-    return client
+    return dbclient
 
 @mock.patch('pymongo.MongoClient', side_effect=mock_mongoDb_client)
 def test_default_endpoint(mock_mongoDb_client, client):
@@ -117,7 +117,8 @@ def test_add_post_endpoint(mock_mongoDb_client, client):
     assert response.status_code == 302
     assert "<h1>Redirecting...</h1>" in response_html
 
-def test_edit_get_endpoint(client):
+@mock.patch('pymongo.MongoClient', side_effect=mock_mongoDb_client)
+def test_edit_get_endpoint(mock_mongoDb_client, client):
     #given
 
     # when
