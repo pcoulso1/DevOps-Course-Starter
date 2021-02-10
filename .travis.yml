@@ -38,7 +38,8 @@ deploy:
       docker push registry.heroku.com/$HEROKU_APP/web &&
       wget -qO- https://cli-assets.heroku.com/install.sh | sh &&
       /usr/local/bin/heroku container:release --app dev-ops-todo-app web
-
+    on:
+      branch: master
 
 branches:
   only:
