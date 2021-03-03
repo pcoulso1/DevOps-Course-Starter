@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block title %}To-Do App{% endblock %}
+
+{% block navbar %}
+<div class="collapse navbar-collapse" id="navbarText">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="/">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/add">Add</a>
+    </li>
+  </ul>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <form action="/editdetails/{{ item.id }}" method="post">
+      <h2>Edit details</h2>
+      <div class="form-group">
+        <label for="todo">Title</label>
+        <input type="text" class="form-control" id="todo" name="todo_title" value="{{ item.title }}">
+        <label for="description">Description</label>
+        <input type="text" class="form-control" id="description" name="todo_description" value="{{ item.description }}">
+        <label for="status">Status</label>
+        <input type="text" class="form-control" id="status" name="todo_status" readonly value="{{ item.status }}">
+        <label for="due">Due</label>
+        <div class="input-group date" data-provide="datepicker">
+          <input type="text" class="form-control" id="due" name="todo_due" value="{{ item.due_date() }}">
+          <div class="input-group-append">
+            <span class="fa fa-calendar input-group-text" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+      <button type="submit" name="edit" class="btn btn-primary">Edit Task</button>
+      <button type="submit" name="cancel" class="btn btn-secondary" formnovalidate>Cancel</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

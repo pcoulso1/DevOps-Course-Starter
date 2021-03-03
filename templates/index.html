@@ -31,6 +31,11 @@
       </form>
     </td>
     <td>
+      <form action="/editdetails/{{ item.id }}">
+        <button type="submit" id="status" class="btn btn-primary btn-sm">Edit</button>
+      </form>
+    </td>
+    <td>
       <form action="/delete/{{ item.id }}">
         <button type="submit" id="status" class="btn btn-primary btn-sm"
           {% if not item.can_delete() %}disabled{% endif %}>Remove</button>
@@ -62,8 +67,9 @@
         <tr>
           <th scope="col">Task</th>
           <th scope="col">Status</th>
-          <th scope="col">Due</th>
-          <th scope="col">Update</th>
+          <th scope="col">Due Date</th>
+          <th scope="col">Update Status</th>
+          <th scope="col">Edit</th>
           <th scope="col">Remove</th>
         </tr>
         </thead>
