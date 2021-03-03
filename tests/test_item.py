@@ -88,11 +88,12 @@ def test_from_json():
     json = { '_id': 'theId',
              'name': 'theName',
              'desc': 'theDescription',
+             'status': Status.TODO,
              'due': '26/09/2020',
-             'dateLastActivity': '2020-07-02T07:39:25.531Z'}
+             'updated': '2020-07-02T07:39:25.531Z'}
 
     #when
-    item = Item.from_json(json, Status.TODO)
+    item = Item.from_json(json)
 
     #then
     assert item.id == 'theId'

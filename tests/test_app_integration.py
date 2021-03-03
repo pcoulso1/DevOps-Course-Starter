@@ -24,33 +24,33 @@ def mock_mongoDb_client(*args, **kwargs):
 
     mockToDoItems = [
         {'_id': ObjectId('5efcab153d4408623d3a0481'), 'name': 'Test task1', 'desc': 'Test in todo',
-            'status': Status.TODO, 'due': None, 'dateLastActivity': '2020-07-02T12:59:12.694Z'},
+            'status': Status.TODO, 'due': None, 'updated': '2020-07-02T12:59:12.694Z'},
         {'_id': ObjectId('5efcab153d4408623d3a0482'), 'name': 'Test task2', 'desc': 'Test in todo', 'status': Status.TODO,
-            'due': '2020-08-02T04:00:00.000Z', 'dateLastActivity': '2020-07-02T12:59:12.694Z'},
+            'due': '2020-08-02T04:00:00.000Z', 'updated': '2020-07-02T12:59:12.694Z'},
         {'_id': ObjectId('5efcab153d4408623d3a0483'), 'name': 'Test task3', 'desc': 'Test in todo', 'status': Status.TODO,
-            'due': '2020-08-02T04:00:00.000Z', 'dateLastActivity': '2020-07-02T12:59:12.694Z'}
+            'due': '2020-08-02T04:00:00.000Z', 'updated': '2020-07-02T12:59:12.694Z'}
     ]
-    db[Status.TODO].insert_many(mockToDoItems)
+    db['items'].insert_many(mockToDoItems)
 
     mockInProgressItems = [
         {'_id': ObjectId('5efcab153d4408623d3a0484'), 'name': 'Test task4', 'desc': 'Test in in-progress',
-            'status': Status.IN_PROGRESS, 'due': None, 'dateLastActivity': '2020-07-02T12:59:12.694Z'},
+            'status': Status.IN_PROGRESS, 'due': None, 'updated': '2020-07-02T12:59:12.694Z'},
         {'_id': ObjectId('5efcab153d4408623d3a0485'), 'name': 'Test task5', 'desc': 'Test in in-progress',
-         'status': Status.IN_PROGRESS, 'due': '2020-08-02T04:00:00.000Z', 'dateLastActivity': '2020-07-02T12:59:12.694Z'},
+         'status': Status.IN_PROGRESS, 'due': '2020-08-02T04:00:00.000Z', 'updated': '2020-07-02T12:59:12.694Z'},
         {'_id': ObjectId('5efcab153d4408623d3a0486'), 'name': 'Test task6', 'desc': 'Test in in-progress',
-         'status': Status.IN_PROGRESS, 'due': '2020-08-02T04:00:00.000Z', 'dateLastActivity': '2020-07-02T12:59:12.694Z'}
+         'status': Status.IN_PROGRESS, 'due': '2020-08-02T04:00:00.000Z', 'updated': '2020-07-02T12:59:12.694Z'}
     ]
-    db[Status.IN_PROGRESS].insert_many(mockInProgressItems)
+    db['items'].insert_many(mockInProgressItems)
 
     mockDoneItems = [
         {'_id': ObjectId('5efcab153d4408623d3a0487'), 'name': 'Test task7', 'desc': 'Test in done',
-            'status': Status.DONE, 'due': None, 'dateLastActivity': '2020-07-02T12:59:12.694Z'},
+            'status': Status.DONE, 'due': None, 'updated': '2020-07-02T12:59:12.694Z'},
         {'_id': ObjectId('5efcab153d4408623d3a0488'), 'name': 'Test task8', 'desc': 'Test in done', 'status': Status.DONE,
-         'due': '2020-08-02T04:00:00.000Z', 'dateLastActivity': '2020-07-02T12:59:12.694Z'},
+         'due': '2020-08-02T04:00:00.000Z', 'updated': '2020-07-02T12:59:12.694Z'},
         {'_id': ObjectId('5efcab153d4408623d3a0489'), 'name': 'Test task9', 'desc': 'Test in done', 'status': Status.DONE,
-         'due': '2020-08-02T04:00:00.000Z', 'dateLastActivity': '2020-07-02T12:59:12.694Z'}
+         'due': '2020-08-02T04:00:00.000Z', 'updated': '2020-07-02T12:59:12.694Z'}
     ]
-    db[Status.DONE].insert_many(mockDoneItems)
+    db['items'].insert_many(mockDoneItems)
 
     return dbclient
 

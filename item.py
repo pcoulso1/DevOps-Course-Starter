@@ -54,16 +54,15 @@ class Item:
         return self.status == Status.DONE and datetime.strptime(self.updated, '%Y-%m-%dT%H:%M:%S.%fZ').date() == date.today()
 
     @classmethod
-    def from_json(cls, json, listname):
+    def from_json(cls, json):
         """
         Initialize an Item from an instance of the bacnking store json
     
         Args:
             json: The todo item in json.
-            listname: The name of the list the item belongs to.
 
         Returns:
             cls: An instance of the Item class.
         """
-        return cls(json['_id'], json['name'], listname, json['desc'], json['due'], json['dateLastActivity'])
+        return cls(json['_id'], json['name'], json['status'], json['desc'], json['due'], json['updated'])
 

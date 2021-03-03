@@ -8,6 +8,8 @@ from mongo_db.config import Config
 
 class ItemStore:
 
+    COLLECTION_NAME = 'items'
+
     def __init__(self):
         self.MONGODB_CLIENT = None
         self.MONGODB_DATABASE = None
@@ -28,16 +30,16 @@ class ItemStore:
 
         return self.MONGODB_DATABASE
 
-
-    def get_lists(self, db):
+    def get_collection(self):
         """
-        Fetches all lists which exist in the database.
+        Fetches all saved items from the Mongo DB.
 
         Returns:
-            list: The name of all the list in the DB.
+            list: The list of saved items.
         """
-        return db.list_collection_names()
 
+        db = self.get_mongodb()
+        return db[ItemStore.COLLECTION_NAME]
 
     def get_items(self):
         """
@@ -46,12 +48,7 @@ class ItemStore:
         Returns:
             list: The list of saved items.
         """
-        db = self.get_mongodb()
-        item_lists = self.get_lists(db)
-
-        items = [Item.from_json(card, item_list)
-                for item_list in item_lists
-                for card in db[item_list].find()]
+        items = [Item.from_json(card) for card in self.get_collection().find()]
 
         items = sorted(items, key=lambda kv: kv.id)
         items = sorted(items, key=lambda kv: kv.status, reverse=True)
@@ -85,17 +82,14 @@ class ItemStore:
         Returns:
             id: The new saved item id.
         """
-        db = self.get_mongodb()
-        todo_list = db[Status.TODO]
-
         post = {
             'name': title,
             'desc': description,
             'status': Status.TODO,
             'due': due,
-            'dateLastActivity': datetime.datetime.utcnow()}
+            'updated': datetime.datetime.utcnow()}
 
-        return todo_list.insert_one(post).inserted_id
+        return self.get_collection().insert_one(post).inserted_id
 
 
     def update_item(self, id, next_status):
@@ -108,23 +102,15 @@ class ItemStore:
         Returns:
             id: The updated item id or None if it does not exist.
         """
-        db = self.get_mongodb()
-        item_lists = self.get_lists(db)
-
-        for item_list in item_lists:
-            card = db[item_list].find_one({"_id": ObjectId(id)})
-            if card is not None:
-                post = {
-                    'name': card['name'],
-                    'desc': card['desc'],
-                    'status': next_status,
-                    'due': card['due'],
-                    'dateLastActivity': datetime.datetime.utcnow()}
-
-                new_id = db[next_status].insert_one(post).inserted_id
-                db[item_list].delete_one({"_id": ObjectId(id)})
-                return new_id
-
+        query = {"_id": ObjectId(id)}
+        doc = self.get_collection().find_one(query)
+        if doc is not None:
+            post = { "$set": {
+                'status': next_status,
+                'updated': datetime.datetime.utcnow()} }
+            
+            return self.get_collection().update_one(query, post)
+            
         return None
 
     def edit_item(self, id, title, description, due):
@@ -140,21 +126,16 @@ class ItemStore:
         Returns:
             item: The edited item id or None if it does not exist.
         """
-        db = self.get_mongodb()
-        item_lists = self.get_lists(db)
-
         query = {"_id": ObjectId(id)}
-        for item_list in item_lists:
-            card = db[item_list].find_one(query)
-            if card is not None:
-                post = { "$set": {
-                    'name': title,
-                    'desc': description,
-                    'status': item_list,
-                    'due': due,
-                    'dateLastActivity': datetime.datetime.utcnow()} }
-                
-                return db[item_list].update_one(query, post)
+        doc = self.get_collection().find_one(query)
+        if doc is not None:
+            post = { "$set": {
+                'name': title,
+                'desc': description,
+                'due': due,
+                'updated': datetime.datetime.utcnow()} }
+            
+            return self.get_collection().update_one(query, post)
 
         return None
 
@@ -169,13 +150,9 @@ class ItemStore:
         Returns:
             response: from the api call.
         """
-        db = self.get_mongodb()
-        item_lists = self.get_lists(db)
-
-        for item_list in item_lists:
-            card = db[item_list].find_one({"_id": ObjectId(id)})
-            if card is not None:
-                return db[item_list].delete_one({"_id": ObjectId(id)})
+        doc = self.get_collection().find_one({"_id": ObjectId(id)})
+        if doc is not None:
+            return self.get_collection().delete_one({"_id": ObjectId(id)})
 
         return None
 
