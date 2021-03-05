@@ -13,6 +13,7 @@ from mongo_db.config import Config
 @pytest.fixture
 def client():
     test_app = app.create_app()
+    test_app.config['LOGIN_DISABLED'] = True
     
     with test_app.test_client() as client:
         yield client
@@ -51,6 +52,14 @@ def mock_mongoDb_client(*args, **kwargs):
          'due': '2020-08-02T04:00:00.000Z', 'updated': '2020-07-02T12:59:12.694Z'}
     ]
     db['items'].insert_many(mockDoneItems)
+
+    mockUsers = [
+        {"_id": ObjectId("6042630446331098645ce912"),"id": 50665,"name":None,"login":"pcoulso1","email":None,"role":"Admin","updated": '2020-07-02T12:59:12.694Z' },
+        {"_id": ObjectId("6042630446331098645ce913"),"id": 50666,"name":"Peter","login":"pcoulso2","email":"peter@email.com","role":"Writer","updated": '2020-07-02T12:59:12.694Z' },
+        {"_id": ObjectId("6042630446331098645ce914"),"id": 50667,"name":"Paul","login":"pcoulso3","email":"Paul@email.com","role":"Reader","updated": '2020-07-02T12:59:12.694Z' },
+        {"_id": ObjectId("6042630446331098645ce915"),"id": 50668,"name":"Pat","login":"pcoulso4","email":"Pat@email.com","role":"Reader","updated": '2020-07-02T12:59:12.694Z' },
+    ]
+    db['users'].insert_many(mockUsers)
 
     return dbclient
 
@@ -173,3 +182,74 @@ def test_delete_post_endpoint(mock_mongoDb_client, client):
     assert response.status_code == 302
     assert "<h1>Redirecting...</h1>" in response_html
 
+@mock.patch('pymongo.MongoClient', side_effect=mock_mongoDb_client)
+def test_admin_endpoint(mock_mongoDb_client, client):
+    #given
+
+    # when
+    response = client.get("/admin")
+    response_html = response.data.decode()
+
+    # then 
+    assert response.status_code == 200
+    assert "<title>To-Do App</title>" in response_html
+    assert "<h2>Users</h2>" in response_html
+    assert "<td>50665</td>" in response_html
+    assert "<td>pcoulso1</td>" in response_html
+    assert "<td>50666</td>" in response_html
+    assert "<td>pcoulso2</td>" in response_html
+    assert "<td>Peter</td>" in response_html
+    assert "<td>50667</td>" in response_html
+    assert "<td>pcoulso3</td>" in response_html
+    assert "<td>Paul</td>" in response_html
+    assert "<td>50668</td>" in response_html
+    assert "<td>pcoulso4</td>" in response_html
+    assert "<td>Pat</td>" in response_html
+
+@mock.patch('pymongo.MongoClient', side_effect=mock_mongoDb_client)
+def test_user_delete_post_endpoint(mock_mongoDb_client, client):
+    #given
+
+    # when
+    response = client.post("/user/delete/50665")
+    response_html = response.data.decode()
+
+    # then 
+    assert response.status_code == 302
+    assert "<h1>Redirecting...</h1>" in response_html
+
+@mock.patch('pymongo.MongoClient', side_effect=mock_mongoDb_client)
+def test_user_read_post_endpoint(mock_mongoDb_client, client):
+    #given
+
+    # when
+    response = client.post("/user/writer/50666")
+    response_html = response.data.decode()
+
+    # then 
+    assert response.status_code == 302
+    assert "<h1>Redirecting...</h1>" in response_html
+
+@mock.patch('pymongo.MongoClient', side_effect=mock_mongoDb_client)
+def test_user_writer_post_endpoint(mock_mongoDb_client, client):
+    #given
+
+    # when
+    response = client.post("/user/writer/50667")
+    response_html = response.data.decode()
+
+    # then 
+    assert response.status_code == 302
+    assert "<h1>Redirecting...</h1>" in response_html
+
+@mock.patch('pymongo.MongoClient', side_effect=mock_mongoDb_client)
+def test_user_admin_post_endpoint(mock_mongoDb_client, client):
+    #given
+
+    # when
+    response = client.post("/user/admin/50668")
+    response_html = response.data.decode()
+
+    # then 
+    assert response.status_code == 302
+    assert "<h1>Redirecting...</h1>" in response_html
