@@ -1,8 +1,17 @@
 digraph "classes_ToDoApp" {
 charset="utf-8"
 rankdir=BT
-"0" [label="{Config|MONGO_DEFAULT_DATABASE : NoneType\lMONGO_HOST : NoneType\lMONGO_PASSWORD : NoneType\lMONGO_USER_NAME : NoneType\l|}", shape="record"];
-"1" [label="{Item|description : str\ldue : str\lid\lstatus : str\ltitle\lupdated : str\l|can_delete()\ldone_today()\ldue_date()\lfrom_json(cls, json, listname)\lnext_status()\l}", shape="record"];
-"2" [label="{Status|DONE : str\lIN_PROGRESS : str\lTODO : str\l|}", shape="record"];
-"3" [label="{ViewModel|done_items\lin_progress_items\litems\lolder_done_items\lrecent_done_items\lshow_all_done_items\ltodo_items\l|}", shape="record"];
+"0" [label="{Config|GITHUB_CLIENT_ID : NoneType\lGITHUB_CLIENT_SECRET : NoneType\l|}", shape="record"];
+"1" [label="{Config|MONGO_DEFAULT_DATABASE : NoneType\lMONGO_HOST : NoneType\lMONGO_PASSWORD : NoneType\lMONGO_USER_NAME : NoneType\l|}", shape="record"];
+"2" [label="{GithubOauthProvider|client : WebApplicationClient\lstate : str\l|get_authenticate_uri()\lget_client_secret()\lget_user_info(authorization_response, redirect_url, code)\l}", shape="record"];
+"3" [label="{Item|description : str\ldue : str\lid\lstatus : str\ltitle\lupdated : str\l|can_delete()\ldone_today()\ldue_date()\lfrom_json(cls, json)\lnext_status()\l}", shape="record"];
+"4" [label="{ItemStore|COLLECTION_NAME : str\l|add_item(title, description, due)\ledit_item(id, title, description, due)\lget_collection()\lget_item(id)\lget_items()\lremove_item(id)\lupdate_item(id, next_status)\l}", shape="record"];
+"5" [label="{Status|DONE : str\lIN_PROGRESS : str\lTODO : str\l|}", shape="record"];
+"6" [label="{Store|MONGODB_CLIENT : NoneType, MongoClient\lMONGODB_DATABASE : NoneType\l|get_mongodb(db_name)\lreset_store()\lsetup_test_store()\l}", shape="record"];
+"7" [label="{User|email\lid\lis_admin\lis_readonly\llogin\lname\lrole\lupdated : str\l|from_json(cls, json)\l}", shape="record"];
+"8" [label="{UserRole|ADMIN : str\lREADER : str\lWRITER : str\l|}", shape="record"];
+"9" [label="{UserStore|COLLECTION_NAME : str\l|add_user_if_missing(user)\lget_collection()\lget_user(user_id)\lget_users()\lremove_user(id)\lupdate_user(id, role)\l}", shape="record"];
+"10" [label="{ViewModel|done_items\lin_progress_items\litems\lolder_done_items\lrecent_done_items\lshow_all_done_items\ltodo_items\l|}", shape="record"];
+"4" -> "6" [arrowhead="empty", arrowtail="none"];
+"9" -> "6" [arrowhead="empty", arrowtail="none"];
 }
