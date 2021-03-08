@@ -28,7 +28,7 @@ class GithubOauthProvider:
             String: the encoded uri
         """
         return self.client.prepare_request_uri('https://github.com/login/oauth/authorize', 
-            redirect_uri='http://localhost:5000/login/callback', 
+            redirect_uri=Config().GITHUB_LOGON_REDIRECT, 
             state=self.state)
 
     def get_user_info(self, authorization_response, redirect_url, code):

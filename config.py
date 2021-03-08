@@ -6,4 +6,7 @@ class Config:
         raise ValueError("No GITHUB_CLIENT_ID set for application. Please check the enviroment")
     GITHUB_CLIENT_SECRET = os.getenv('GITHUB_CLIENT_SECRET')
     if not GITHUB_CLIENT_SECRET:
-        raise ValueError("No MONGO_DEFAULT_DATABASE set for application. Please check the enviroment")
+        raise ValueError("No GITHUB_CLIENT_SECRET set for application. Please check the enviroment")
+    GITHUB_LOGON_REDIRECT = os.getenv('GITHUB_LOGON_REDIRECT')
+    if not GITHUB_LOGON_REDIRECT:
+        raise ValueError("No GITHUB_LOGON_REDIRECT set for application. Please check the enviroment")

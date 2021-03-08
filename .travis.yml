@@ -33,7 +33,7 @@ script:
 - docker run --rm -e FLASK_APP -e FLASK_ENV -e MONGO_HOST -e MONGO_USER_NAME -e MONGO_PASSWORD -e MONGO_DEFAULT_DATABASE -e OAUTHLIB_INSECURE_TRANSPORT -e GITHUB_CLIENT_ID -e GITHUB_CLIENT_SECRET $DOCKER_NAMESPACE/$DOCKER_APP-test tests_e2e
 - echo $DOCKERHUB_PWD | docker login --username $DOCKER_NAMESPACE --password-stdin
 - docker push $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT
-- if [ "$TRAVIS_BRANCH" = "module-10" ]; then docker push $DOCKER_NAMESPACE/$DOCKER_APP; fi
+- if [ "$TRAVIS_BRANCH" = "master" ]; then docker push $DOCKER_NAMESPACE/$DOCKER_APP; fi
 
 deploy:
   - provider: script
