@@ -1,4 +1,5 @@
 # Import dependnecies
+import os
 from oauthlib.oauth2 import WebApplicationClient
 import json
 import requests
@@ -48,6 +49,13 @@ class GithubOauthProvider:
         Returns:
             json: A json string containing the user information from GitHub
         """
+
+        # Modify the protocol if OAUTHLIB_INSECURE_TRANSPORT is not set
+        OAUTHLIB_INSECURE_TRANSPORT = os.getenv('OAUTHLIB_INSECURE_TRANSPORT')
+        if (not OAUTHLIB_INSECURE_TRANSPORT) or OAUTHLIB_INSECURE_TRANSPORT == '0':
+            authorization_response = authorization_response.replace('http://', 'https://')
+            redirect_url = redirect_url.replace('http://', 'https://')
+
         token_url, headers, body = self.client.prepare_token_request(
             'https://github.com/login/oauth/access_token',
             authorization_response=authorization_response,
