@@ -17,6 +17,7 @@ FROM base as production
 COPY *.py *.lock *.toml *.md ./
 COPY templates ./templates
 COPY mongo_db ./mongo_db
+COPY user ./user
 
 # Install dependencies
 RUN poetry config virtualenvs.create false --local &&\
