@@ -16,6 +16,7 @@ FROM base as production
 # Only copy the files to be deployed on Production
 COPY *.py *.lock *.toml *.md ./
 COPY templates ./templates
+COPY mongo_db ./mongo_db
 
 # Install dependencies
 RUN poetry config virtualenvs.create false --local &&\
