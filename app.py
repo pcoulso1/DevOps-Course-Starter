@@ -50,6 +50,8 @@ def create_app(item_store = ItemStore(), user_store = UserStore()):
         # Get authorization code from github 
         code = request.args.get("code")
 
+        app.logger.info(f'oauth_provider.get_user_info authorization_response={request.url} redirect_url={request.base_url}')
+
         # Use the authorization code to get user info
         userinfo = oauth_provider.get_user_info(
             authorization_response=request.url,
