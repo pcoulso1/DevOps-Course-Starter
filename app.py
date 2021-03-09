@@ -75,7 +75,7 @@ def create_app(item_store = ItemStore(), user_store = UserStore()):
     @user_admin_access
     def admin():
         users =  user_store.get_users()
-        return render_template('admin.html', users=users, current_user=current_user)
+        return render_template('admin.html', users=users, login_disabled=is_login_disabled(),  current_user=current_user)
 
     @app.route('/user/<operation>/<id>', methods=['POST'])
     @login_required
@@ -96,7 +96,7 @@ def create_app(item_store = ItemStore(), user_store = UserStore()):
     @login_required
     def index():                                                            # pylint: disable=unused-variable
         items =  item_store.get_items()
-        return render_template('index.html', view_model=ViewModel(items), current_user=current_user)
+        return render_template('index.html', view_model=ViewModel(items), login_disabled=is_login_disabled(), current_user=current_user)
 
     @app.route('/update/<id>/<new_status>', methods=['POST'])
     @login_required
@@ -148,6 +148,11 @@ def create_app(item_store = ItemStore(), user_store = UserStore()):
             return redirect("/")
 
         return render_template('delete.html', item=item_store.get_item(id))
+
+    def is_login_disabled():                                                         # pylint: disable=unused-variable
+        if('LOGIN_DISABLED' in app.config):
+            return app.config['LOGIN_DISABLED']
+        return False
 
     return app
 
