@@ -45,12 +45,13 @@ deploy:
       wget -qO- https://cli-assets.heroku.com/install.sh | sh &&
       /usr/local/bin/heroku container:release --app dev-ops-todo-app web
     on:
-      branch: master
+      branch: module-10
 
 branches:
   only:
   - master
-
+  - module-10
+    
 notifications:
   email:
     recipients:
