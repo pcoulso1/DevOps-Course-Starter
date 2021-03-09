@@ -75,8 +75,8 @@ class UserStore(Store):
 
             return self.get_collection().insert_one(post).inserted_id
         else:
-            stored_user = next((user for user in users if user.id == int(user.id)), None)
-            if(stored_user is None):
+            add_user = next((stored_user for stored_user in users if stored_user.id == int(user.id)), None)
+            if(add_user is None):
                 post = {
                     'id': user.id,
                     'name': user.name,
