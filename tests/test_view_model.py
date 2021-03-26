@@ -2,7 +2,7 @@ import pytest
 
 from item import Item
 from status import Status
-from view_model import ViewModel
+from items_view_model import ItemsViewModel
 from datetime import date, datetime
 
 
@@ -13,7 +13,7 @@ def test_todo_status():
     ]
 
     #when
-    vm = ViewModel(items)
+    vm = ItemsViewModel(items)
 
     #then
     assert len(vm.items) == 1
@@ -28,7 +28,7 @@ def test_in_progress_status():
     ]
 
     #when
-    vm = ViewModel(items)
+    vm = ItemsViewModel(items)
 
     #then
     assert len(vm.items) == 1
@@ -43,7 +43,7 @@ def test_done_status():
     ]
 
     #when
-    vm = ViewModel(items)
+    vm = ItemsViewModel(items)
 
     #then
     assert len(vm.items) == 1
@@ -58,7 +58,7 @@ def test_unknown_status():
     ]
 
     #when
-    vm = ViewModel(items)
+    vm = ItemsViewModel(items)
 
     #then
     assert len(vm.items) == 1
@@ -81,7 +81,7 @@ def test_show_all_done_false():
     ]
 
     #when
-    vm = ViewModel(items)
+    vm = ItemsViewModel(items)
 
     #then
     assert len(vm.items) == 8
@@ -102,7 +102,7 @@ def test_show_all_done_true():
     ]
 
     #when
-    vm = ViewModel(items)
+    vm = ItemsViewModel(items)
 
     #then
     assert len(vm.items) == 6
@@ -124,7 +124,7 @@ def test_recent_done_items():
     ]
 
     #when
-    vm = ViewModel(items)
+    vm = ItemsViewModel(items)
 
     #then
     assert len(vm.items) == 7
@@ -146,7 +146,7 @@ def test_older_done_items():
     ]
 
     #when
-    vm = ViewModel(items)
+    vm = ItemsViewModel(items)
 
     #then
     assert len(vm.items) == 7

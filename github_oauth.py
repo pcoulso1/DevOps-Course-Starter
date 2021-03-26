@@ -74,7 +74,7 @@ class GithubOauthProvider:
             auth=(Config().GITHUB_CLIENT_ID, Config().GITHUB_CLIENT_SECRET),
         )
 
-        self.client.parse_request_body_response(json.dumps(token_response.json()))
+        self.client.parse_request_body_response(token_response.text)
 
         uri, headers, body = self.client.add_token('https://api.github.com/user')
         userinfo_response = requests.get(uri, headers=headers, data=body)

@@ -16,7 +16,7 @@ from flask_login import (
 import logging
 
 # Appliction imports
-from view_model import ViewModel
+from items_view_model import ItemsViewModel
 from mongo_db.item_store import ItemStore
 from mongo_db.user_store import UserStore
 from github_oauth import GithubOauthProvider
@@ -75,7 +75,7 @@ def create_app(item_store = ItemStore(), user_store = UserStore()):
     @user_admin_access
     def admin():
         users =  user_store.get_users()
-        return render_template('admin.html', users=users, login_disabled=is_login_disabled(),  current_user=current_user)
+        return render_template('admin.html', users=users, current_user=current_user)
 
     @app.route('/user/<operation>/<id>', methods=['POST'])
     @login_required
@@ -96,7 +96,7 @@ def create_app(item_store = ItemStore(), user_store = UserStore()):
     @login_required
     def index():                                                            # pylint: disable=unused-variable
         items =  item_store.get_items()
-        return render_template('index.html', view_model=ViewModel(items), login_disabled=is_login_disabled(), current_user=current_user)
+        return render_template('index.html', items_view_model=ItemsViewModel(items), login_disabled=is_login_disabled(), current_user=current_user)
 
     @app.route('/update/<id>/<new_status>', methods=['POST'])
     @login_required

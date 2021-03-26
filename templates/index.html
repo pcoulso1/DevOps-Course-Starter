@@ -81,19 +81,19 @@
         </tr>
         </thead>
         <tbody>
-          {{ draw_items_table(view_model.todo_items) }}
-          {{ draw_items_table(view_model.in_progress_items) }}
+          {{ draw_items_table(items_view_model.todo_items) }}
+          {{ draw_items_table(items_view_model.in_progress_items) }}
 
-          {% if view_model.show_all_done_items %}
-            {{ draw_items_table(view_model.done_items) }}
+          {% if items_view_model.show_all_done_items %}
+            {{ draw_items_table(items_view_model.done_items) }}
           {% else %}
-            {{ draw_items_table(view_model.recent_done_items) }}
+            {{ draw_items_table(items_view_model.recent_done_items) }}
           {% endif %}
           
         </tbody>
     </table>
 
-    {% if view_model.show_all_done_items == False %}
+    {% if items_view_model.show_all_done_items == False %}
     <details>
       <summary>Historical Done items</summary>
       <table class="table table-striped table-bordered table-sm">
@@ -107,7 +107,7 @@
           </tr>
           </thead>
           <tbody>
-            {{ draw_items_table(view_model.older_done_items) }}
+            {{ draw_items_table(items_view_model.older_done_items) }}
           </tbody>
         </table>
     </details>
