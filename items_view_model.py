@@ -1,6 +1,6 @@
 from status import Status
 
-class ViewModel:
+class ItemsViewModel:
 
     def __init__(self, items):
         self._items = items

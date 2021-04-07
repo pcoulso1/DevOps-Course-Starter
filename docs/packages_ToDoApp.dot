@@ -2,16 +2,34 @@ digraph "packages_ToDoApp" {
 charset="utf-8"
 rankdir=BT
 "0" [label="app", shape="box"];
-"1" [label="item", shape="box"];
-"2" [label="mongo_db.config", shape="box"];
-"3" [label="mongo_db.item_store", shape="box"];
-"4" [label="status", shape="box"];
-"5" [label="view_model", shape="box"];
-"0" -> "3" [arrowhead="open", arrowtail="none"];
+"1" [label="config", shape="box"];
+"2" [label="github_oauth", shape="box"];
+"3" [label="item", shape="box"];
+"4" [label="mongo_db.config", shape="box"];
+"5" [label="mongo_db.item_store", shape="box"];
+"6" [label="mongo_db.store", shape="box"];
+"7" [label="mongo_db.user_store", shape="box"];
+"8" [label="status", shape="box"];
+"9" [label="user.user", shape="box"];
+"10" [label="user.user_access", shape="box"];
+"11" [label="user.user_role", shape="box"];
+"12" [label="view_model", shape="box"];
+"0" -> "2" [arrowhead="open", arrowtail="none"];
 "0" -> "5" [arrowhead="open", arrowtail="none"];
-"1" -> "4" [arrowhead="open", arrowtail="none"];
-"3" -> "1" [arrowhead="open", arrowtail="none"];
-"3" -> "2" [arrowhead="open", arrowtail="none"];
-"3" -> "4" [arrowhead="open", arrowtail="none"];
-"5" -> "4" [arrowhead="open", arrowtail="none"];
+"0" -> "7" [arrowhead="open", arrowtail="none"];
+"0" -> "9" [arrowhead="open", arrowtail="none"];
+"0" -> "10" [arrowhead="open", arrowtail="none"];
+"0" -> "11" [arrowhead="open", arrowtail="none"];
+"0" -> "12" [arrowhead="open", arrowtail="none"];
+"2" -> "1" [arrowhead="open", arrowtail="none"];
+"3" -> "8" [arrowhead="open", arrowtail="none"];
+"5" -> "3" [arrowhead="open", arrowtail="none"];
+"5" -> "6" [arrowhead="open", arrowtail="none"];
+"5" -> "8" [arrowhead="open", arrowtail="none"];
+"6" -> "4" [arrowhead="open", arrowtail="none"];
+"7" -> "6" [arrowhead="open", arrowtail="none"];
+"7" -> "9" [arrowhead="open", arrowtail="none"];
+"7" -> "11" [arrowhead="open", arrowtail="none"];
+"9" -> "11" [arrowhead="open", arrowtail="none"];
+"12" -> "8" [arrowhead="open", arrowtail="none"];
 }

@@ -4,31 +4,14 @@ import datetime
 from status import Status
 from bson.objectid import ObjectId
 from item import Item
-from mongo_db.config import Config
-
-class ItemStore:
+from mongo_db.store import Store
+class ItemStore(Store):
 
     COLLECTION_NAME = 'items'
 
     def __init__(self):
-        self.MONGODB_CLIENT = None
-        self.MONGODB_DATABASE = None
+        Store.__init__(self)
 
-    def get_mongodb(self, db_name=Config().MONGO_DEFAULT_DATABASE):
-        """
-        Returns the MongoDB
-
-        Returns:
-            db: The Mongo DB database object.
-        """
-        if self.MONGODB_DATABASE is None:
-
-            if self.MONGODB_CLIENT is None:
-                self.MONGODB_CLIENT = pymongo.MongoClient(
-                    f'mongodb+srv://{Config().MONGO_USER_NAME}:{Config().MONGO_PASSWORD}@{Config().MONGO_HOST}/{db_name}?retryWrites=true&w=majority')
-            self.MONGODB_DATABASE = self.MONGODB_CLIENT[db_name]
-
-        return self.MONGODB_DATABASE
 
     def get_collection(self):
         """
@@ -40,6 +23,7 @@ class ItemStore:
 
         db = self.get_mongodb()
         return db[ItemStore.COLLECTION_NAME]
+
 
     def get_items(self):
         """
@@ -113,6 +97,7 @@ class ItemStore:
             
         return None
 
+
     def edit_item(self, id, title, description, due):
         """
         Edit an existing items details - title, description and due date to Mongo DB.
@@ -155,26 +140,3 @@ class ItemStore:
             return self.get_collection().delete_one({"_id": ObjectId(id)})
 
         return None
-
-
-    def setup_test_store(self):
-        """
-        Sets a test board ID which is to be used for testing purposes
-
-        Returns:
-            None
-
-        """
-        self.reset_store()
-        self.get_mongodb("testBoard")
-
-
-    def reset_store(self):
-        """
-        Resets the test store
-
-        Returns:
-            None
-        """
-        self.MONGODB_DATABASE = None
-        self.MONGODB_CLIENT = None

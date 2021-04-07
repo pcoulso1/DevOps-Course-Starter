@@ -19,7 +19,7 @@
     </td>
     <td>
       <form action="/update/{{ item.id }}/{{ item.next_status() }}" method="post">
-        <button type="submit" id="status" class="btn btn-primary btn-sm">
+        <button type="submit" id="status" class="btn btn-primary btn-sm" {% if (not login_disabled) and current_user.is_readonly %}disabled{% endif %}>
           {% if 'InProgress' == item.next_status() %}
           Start Task
           {% elif 'Done' == item.next_status() %}
@@ -32,13 +32,13 @@
     </td>
     <td>
       <form action="/editdetails/{{ item.id }}">
-        <button type="submit" id="status" class="btn btn-primary btn-sm">Edit</button>
+        <button type="submit" id="status" class="btn btn-primary btn-sm" {% if (not login_disabled) and current_user.is_readonly %}disabled{% endif %}>Edit</button>
       </form>
     </td>
     <td>
       <form action="/delete/{{ item.id }}">
         <button type="submit" id="status" class="btn btn-primary btn-sm"
-          {% if not item.can_delete() %}disabled{% endif %}>Remove</button>
+          {% if (not item.can_delete()) or ((not login_disabled) and current_user.is_readonly) %}disabled{% endif %}>Remove</button>
       </form>
     </td>
   </tr>
@@ -51,9 +51,16 @@
     <li class="nav-item active">
       <a class="nav-link" href="/">Home</a>
     </li>
+    {% if login_disabled or (not current_user.is_readonly) %}
     <li class="nav-item">
       <a class="nav-link" href="/add">Add</a>
     </li>
+    {% endif %}
+    {% if login_disabled or current_user.is_admin %}
+    <li class="nav-item">
+      <a class="nav-link" href="/admin">Admin</a>
+    </li>
+    {% endif %}
   </ul>
 </div>
 {% endblock %}
@@ -74,19 +81,19 @@
         </tr>
         </thead>
         <tbody>
-          {{ draw_items_table(view_model.todo_items) }}
-          {{ draw_items_table(view_model.in_progress_items) }}
+          {{ draw_items_table(items_view_model.todo_items) }}
+          {{ draw_items_table(items_view_model.in_progress_items) }}
 
-          {% if view_model.show_all_done_items %}
-            {{ draw_items_table(view_model.done_items) }}
+          {% if items_view_model.show_all_done_items %}
+            {{ draw_items_table(items_view_model.done_items) }}
           {% else %}
-            {{ draw_items_table(view_model.recent_done_items) }}
+            {{ draw_items_table(items_view_model.recent_done_items) }}
           {% endif %}
           
         </tbody>
     </table>
 
-    {% if view_model.show_all_done_items == False %}
+    {% if items_view_model.show_all_done_items == False %}
     <details>
       <summary>Historical Done items</summary>
       <table class="table table-striped table-bordered table-sm">
@@ -100,7 +107,7 @@
           </tr>
           </thead>
           <tbody>
-            {{ draw_items_table(view_model.older_done_items) }}
+            {{ draw_items_table(items_view_model.older_done_items) }}
           </tbody>
         </table>
     </details>
@@ -110,7 +117,7 @@
 </div>
 <div class="row">
   <form action="/add">
-    <button type="submit" class="btn btn-primary">Add Task</button>
+    <button type="submit" class="btn btn-primary" {% if (not login_disabled) and current_user.is_readonly %}disabled{% endif %}>Add Task</button>
   </form>
 </div>
 {% endblock %}
