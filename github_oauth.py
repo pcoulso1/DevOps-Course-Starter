@@ -52,7 +52,7 @@ class GithubOauthProvider:
 
         # Modify the protocol if OAUTHLIB_INSECURE_TRANSPORT is not set to https
         # as we are running in a container and binding to http, but GITHUG uses the 
-        # external heroku URL which is TLS protected
+        # external azure URL which is TLS protected
         OAUTHLIB_INSECURE_TRANSPORT = os.getenv('OAUTHLIB_INSECURE_TRANSPORT')
         if (not OAUTHLIB_INSECURE_TRANSPORT) or OAUTHLIB_INSECURE_TRANSPORT == '0':
             authorization_response = authorization_response.replace('http://', 'https://')

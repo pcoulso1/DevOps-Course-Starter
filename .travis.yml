@@ -6,7 +6,6 @@ env:
   - MONGO_DEFAULT_DATABASE=todoBoard
   - DOCKER_NAMESPACE=pcoulso1
   - DOCKER_APP=todo-app
-  - HEROKU_APP=dev-ops-todo-app
   - OAUTHLIB_INSECURE_TRANSPORT=1
   - GITHUB_LOGON_REDIRECT=http://localhost:5000/login/callback
   # Secret for MONGO_URL (needed to run it through bash printf %q "MONGO_URL=<var>" to escape the string)
@@ -33,18 +32,18 @@ script:
 before_deploy:
   - echo $DOCKERHUB_PWD | docker login --username $DOCKER_NAMESPACE --password-stdin
   - docker push $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT
-  - if [ "$TRAVIS_BRANCH" = "module-11" ]; then docker push $DOCKER_NAMESPACE/$DOCKER_APP; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then docker push $DOCKER_NAMESPACE/$DOCKER_APP; fi
 
 deploy:
   - provider: script
     script: 
       curl -dH -X POST "$AZURE_WEBHOOK"
     on:
-      branch: module-11
+      branch: master
 
 branches:
   only:
-  - module-11
+  - master
     
 notifications:
   email:
