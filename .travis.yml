@@ -33,7 +33,7 @@ script:
 before_deploy:
   - echo $DOCKERHUB_PWD | docker login --username $DOCKER_NAMESPACE --password-stdin
   - docker push $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT
-  - if [ "$TRAVIS_BRANCH" = "master" ]; then docker push $DOCKER_NAMESPACE/$DOCKER_APP; fi
+  - if [ "$TRAVIS_BRANCH" = "module-11" ]; then docker push $DOCKER_NAMESPACE/$DOCKER_APP; fi
 
 deploy:
   - provider: script
