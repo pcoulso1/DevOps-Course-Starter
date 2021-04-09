@@ -19,7 +19,7 @@ class Store:
 
             if self.MONGODB_CLIENT is None:
                 self.MONGODB_CLIENT = pymongo.MongoClient(
-                    f'mongodb+srv://{Config().MONGO_USER_NAME}:{Config().MONGO_PASSWORD}@{Config().MONGO_HOST}/{db_name}?retryWrites=true&w=majority')
+                    f'{Config().MONGO_URL}')
             self.MONGODB_DATABASE = self.MONGODB_CLIENT[db_name]
 
         return self.MONGODB_DATABASE
