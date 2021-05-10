@@ -32,6 +32,7 @@ services:
 - docker
 
 script:
+  - docker info
 # - docker build --target production --tag $DOCKER_NAMESPACE/$DOCKER_APP .
 # - docker tag $DOCKER_NAMESPACE/$DOCKER_APP $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT
 # - docker build --target test --tag $DOCKER_NAMESPACE/$DOCKER_APP-test .
