@@ -54,7 +54,7 @@ before_deploy:
 deploy:
   - provider: script
     script: 
-      curl -dH -X POST $(terraform output -raw cd_webhook)
+      curl -dH -X POST "$(printf %q $(terraform output -raw cd_webhook))"
     on:
       branch: module-12
 
