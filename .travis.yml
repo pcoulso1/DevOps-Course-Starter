@@ -48,7 +48,7 @@ before_deploy:
   - rm terraform_"$TF_VERSION"_linux_amd64.zip
   - terraform init
   - terraform apply -auto-approve -var "github_client_id=$AZURE_GITHUB_CLIENT_ID" -var "github_client_secret=$AZURE_GITHUB_CLIENT_SECRET" -var "github_logon_redirect=$AZURE_GITHUB_LOGON_REDIRECT"
-  - export AZURE_WEBHOOK="$(terraform output -raw webhook_url)"
+  - export AZURE_WEBHOOK="$(terraform output -raw cd_webhook)"
 
 deploy:
   - provider: script
