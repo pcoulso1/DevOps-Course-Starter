@@ -29,21 +29,19 @@ env:
   - secure: 4HjHH0XHV0El5P7Dk8DKb+aS2uzQZhfuRkmiMMMtbJsqnPJ2I8CTRLwLKLqp9TiMONpMcyKvERyi8PwNHFMCeGJKwyfOVBdl7+nWIcHS+9ejkYmd1/VpDNHAE6BxWvLjiTiCV3VzunQOlZvrYc5RE5LUJdQ4+TMwZ6e4uPozTBQeY2hCjUzNCn7K1L4/rNK5dniNB7VtNQIewm5vGcKqiSG4tlp78+GopBobBfRE7V83pmRcqpHGyKQaTYzhae05CVyVh28XQBgNh003dDbj1loYdHxAA7BlJJPeoD9VA3c1bxsI+/dHbh9LEr7pCoVjf9WXgSobPRmY1ZZJSp9twdD0OARK0GrQk2r9xowXMjVyW0rB5+QxdCK2/BNlAFdbtIGDURVfx98FTYTp0G8woHjlMyTQlDrBiV0eAYs6tqKsRGXzzHZrMtr5ZFXXh/3zJ6/hnUM5E5mGnL5GGui5UFPXmib4j5KDOBNVOLI51omuHE/htuVuqdwtS1thwoVZekQq2Oz7yvCC0w0T/WpNHhmcuKPeQvodVSoXiOPnbvBVyQkF4TPsn/maZzjAhXrfe5VduS7wPI/ergEm3jyVhoD9F84/Nq5iIMYlSMaO1N8uG5XzmDY+7Ip7WG5RM+AgUvWmvAdgbYanarZiKrdnV6MB2N4f42/SBiqRUTHOt+k=
 
 services:
-- docker
+  - docker
 
 script:
-  - docker info
-# - docker build --target production --tag $DOCKER_NAMESPACE/$DOCKER_APP .
-# - docker tag $DOCKER_NAMESPACE/$DOCKER_APP $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT
-# - docker build --target test --tag $DOCKER_NAMESPACE/$DOCKER_APP-test .
-# - docker run --rm -e FLASK_APP -e FLASK_ENV -e MONGO_URL -e MONGO_DEFAULT_DATABASE -e OAUTHLIB_INSECURE_TRANSPORT -e GITHUB_CLIENT_ID -e GITHUB_CLIENT_SECRET -e GITHUB_LOGON_REDIRECT $DOCKER_NAMESPACE/$DOCKER_APP-test tests
-
-# - docker run --rm -e FLASK_APP -e FLASK_ENV -e MONGO_URL -e MONGO_DEFAULT_DATABASE -e OAUTHLIB_INSECURE_TRANSPORT -e GITHUB_CLIENT_ID -e GITHUB_CLIENT_SECRET -e GITHUB_LOGON_REDIRECT $DOCKER_NAMESPACE/$DOCKER_APP-test tests_e2e
+  - docker build --target production --tag $DOCKER_NAMESPACE/$DOCKER_APP .
+  - docker tag $DOCKER_NAMESPACE/$DOCKER_APP $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT
+  - docker build --target test --tag $DOCKER_NAMESPACE/$DOCKER_APP-test .
+  - docker run --rm -e FLASK_APP -e FLASK_ENV -e MONGO_URL -e MONGO_DEFAULT_DATABASE -e OAUTHLIB_INSECURE_TRANSPORT -e GITHUB_CLIENT_ID -e GITHUB_CLIENT_SECRET -e GITHUB_LOGON_REDIRECT $DOCKER_NAMESPACE/$DOCKER_APP-test tests
+  # - docker run --rm -e FLASK_APP -e FLASK_ENV -e MONGO_URL -e MONGO_DEFAULT_DATABASE -e OAUTHLIB_INSECURE_TRANSPORT -e GITHUB_CLIENT_ID -e GITHUB_CLIENT_SECRET -e GITHUB_LOGON_REDIRECT $DOCKER_NAMESPACE/$DOCKER_APP-test tests_e2e
 
 before_deploy:
-  # - echo $DOCKERHUB_PWD | docker login --username $DOCKER_NAMESPACE --password-stdin
-  # - docker push $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT
-  # - if [ "$TRAVIS_BRANCH" = "module-12" ]; then docker push $DOCKER_NAMESPACE/$DOCKER_APP; fi
+  - echo $DOCKERHUB_PWD | docker login --username $DOCKER_NAMESPACE --password-stdin
+  - docker push $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then docker push $DOCKER_NAMESPACE/$DOCKER_APP; fi
   - wget https://releases.hashicorp.com/terraform/"$TF_VERSION"/terraform_"$TF_VERSION"_linux_amd64.zip
   - unzip terraform_"$TF_VERSION"_linux_amd64.zip
   - sudo mv terraform /usr/local/bin/
@@ -56,11 +54,11 @@ deploy:
     script: 
       curl -dH -X POST "$(printf %q $(terraform output -raw cd_webhook))"
     on:
-      branch: module-12
+      branch: master
 
 branches:
   only:
-  - module-12
+  - master
     
 notifications:
   email:
