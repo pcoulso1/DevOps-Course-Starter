@@ -1,7 +1,7 @@
 terraform {
 
   backend "azurerm" {
-    resource_group_name   = "CreditSuisse1_PeterTaylor-Coulson_ProjectExercise"
+    resource_group_name   = "${var.resource_name}"
     storage_account_name  = "tstate16224"
     container_name        = "tstate"
     key                   = "terraform.tfstate"
@@ -21,8 +21,7 @@ provider "azurerm" {
 }
 
 data "azurerm_resource_group" "main" {
-  name = "CreditSuisse1_PeterTaylor-Coulson_ProjectExercise"
-  #location = "uksouth"
+  name = "${var.resource_name}"
 }
 
 resource "azurerm_cosmosdb_account" "main" {
