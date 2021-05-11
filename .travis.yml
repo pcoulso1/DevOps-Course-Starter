@@ -50,11 +50,11 @@ deploy:
       docker push $DOCKER_NAMESPACE/$DOCKER_APP && 
       scripts/deploy.sh
     on:
-      branch: master
+      branch: module-12
 
 branches:
   only:
-  - master
+  - module-12
     
 notifications:
   email:
