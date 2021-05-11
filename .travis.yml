@@ -48,8 +48,8 @@ before_deploy:
 deploy:
   - provider: script
     script: >-
-      # docker push $DOCKER_NAMESPACE/$DOCKER_APP && 
       scripts/deploy.sh
+      # docker push $DOCKER_NAMESPACE/$DOCKER_APP && 
     on:
       branch: module-12
 
