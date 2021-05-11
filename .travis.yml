@@ -36,7 +36,7 @@ before_deploy:
 deploy:
   - provider: script
     script: |
-      docker push $DOCKER_NAMESPACE/$DOCKER_APP && \
+      docker push $DOCKER_NAMESPACE/$DOCKER_APP &&
       curl -dH -X POST "$AZURE_WEBHOOK"
     on:
       branch: master
