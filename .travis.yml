@@ -53,8 +53,9 @@ deploy:
       rm terraform_"$TF_VERSION"_linux_amd64.zip && 
       terraform init && 
       terraform apply -auto-approve -var "github_client_id=$AZURE_GITHUB_CLIENT_ID" -var "github_client_secret=$AZURE_GITHUB_CLIENT_SECRET" -var "github_logon_redirect=$AZURE_GITHUB_LOGON_REDIRECT" && 
-      sleep 5 &&
-      echo curl -dH -X POST "$(printf %q $(terraform output -raw cd_webhook))"
+      export AZURE_WEBHOOK="$(printf %q $(terraform output -raw cd_webhook))"
+      echo curl -dH -X POST "$AZURE_WEBHOOK" &&
+      exit 0
     on:
       branch: module-12
 
