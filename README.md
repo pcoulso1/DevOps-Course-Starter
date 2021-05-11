@@ -65,10 +65,7 @@ To run the e2e tests the "testBoard" database will be created with the following
 
 The `.env` file is used by flask to set environment variables when running `flask run`. This enables things like developement mode (which also enables features like hot reloading when you make a file change).
 There's also a number of variables which are used to connect to MongoDb;
-* MONGO_HOST - the host of the MongoDB cluster e.g. cluster0.xrdya.mongodb.net
-* MONGO_USER_NAME - the username used to connect to MongoDB (please MongoDB setup)
-* MONGO_PASSWORD - the password used to connect to MongoDB (please MongoDB setup)
-* MONGO_DEFAULT_DATABASE - the database which the application will used, default to todoBoard (please MongoDB setup)
+* MONGO_URL - the full url for the MongoDB including the default database in the connection string e.g. mongodb+srv://user:pwd@cluster0.xrdya.mongodb.net/todoBoard?retryWrites=true&w=majority
 
 When running `setup.sh`, the `.env.template` file will be copied to `.env` if the latter does not exist.
 
@@ -135,8 +132,8 @@ docker run -p 80:5000 --env-file .env -d devops-course-starter:prod-v0.1
 Or
 ```
 docker run -p 80:5000 \
-    -e MONGO_USER_NAME=<key> \
-    -e MONGO_PASSWORD=<token> \
+    -e MONGO_URL=<url> \
+    -e MONGO_DEFAULT_DATABASE=<db name> \
     -d devops-course-starter:prod-v0.1
 ```
 
@@ -148,8 +145,8 @@ Or
 ```
 docker run -p 80:5000 \
     --mount type=bind,source=$(pwd),target=/usr/src/app
-    -e MONGO_USER_NAME=<key> \
-    -e MONGO_PASSWORD=<token> \
+    -e MONGO_URL=<url> \
+    -e MONGO_DEFAULT_DATABASE=<db name> \
     -d devops-course-starter:dev-v0.1
 ```
 
