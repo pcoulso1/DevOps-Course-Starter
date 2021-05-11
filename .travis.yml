@@ -13,6 +13,7 @@ env:
   - ARM_TENANT_ID=7d6f97d6-d755-4c10-b763-409cc4b6638f
   - ARM_SUBSCRIPTION_ID=d33b95c7-af3c-4247-9661-aa96d47fccc0
   - TF_VERSION=0.14.7
+  - TF_IN_AUTOMATION=true
   # Secret for ARM_CLIENT_SECRET
   - secure: iN8JnZW+B4dor+/eJx0MVOR1ITDP9sHr3qGVEyGHgD94FcA7kQtGyzROAzKBjPBvlGRSjzYwuHzz61sMpsm65A10y7MSd066RuG7AIcwVdNuyOcy1N05SzVz/vl3dH6ePrFNvErW+/YWranaaVkQiCMm+RNdPDvbC2hepqwYz6uUeBqboG2kTgDtu7IDdBdiYdulgVkZOeS1MhlT3PVsa/udChC4oFVM9qVBNxHFMs8MffBCw8BYHOPBA9D+d0CO1nf6DVQ1/EIj+88hm9gusj2N+i5yzPScLR9gtKM+2DtJeUTUosrir2jqQRjdDnI+ZcuEUjxeLrZ47cISd+14cFTcrLOrkDJs4yr07QN5sWEGCPUDYwriWHZHg99Duw6EQu9moJaTDXFNtfbslV6KDRK0NhqLwyB9XCi822rc9DgHDyyAvZbQHfryohwR7jvad0wyb6c/yP2YePcFmQNELPj6WryZc8xq2db9ZrbBqZbdhMPYMHqO68HRbLK3LX9XIx4JOliY9cUbetM8wcIZKrGoo+bB77aSHV+lLfLAsCs7YNqTgwr2zyy9a9rEgZF8T8DYZgG+qjnU7h5x7DX8xSWwCnOosINd20dsZ+fF+a/Da5wqbCnDOoj6BlBRW3j4a3hdoWDlPeXReeh2zkyMwH5jp0jvF6ZoyPd5P2GmFIM=
   # Secret for MONGO_URL (needed to run it through bash printf %q "MONGO_URL=<var>" to escape the string)
@@ -51,8 +52,8 @@ deploy:
       unzip terraform_"$TF_VERSION"_linux_amd64.zip && 
       sudo mv terraform /usr/local/bin/ && 
       rm terraform_"$TF_VERSION"_linux_amd64.zip && 
-      terraform init && 
-      terraform apply -auto-approve -var "github_client_id=$AZURE_GITHUB_CLIENT_ID" -var "github_client_secret=$AZURE_GITHUB_CLIENT_SECRET" -var "github_logon_redirect=$AZURE_GITHUB_LOGON_REDIRECT") && 
+      terraform init -input=false && 
+      terraform apply -input=false -auto-approve -var "github_client_id=$AZURE_GITHUB_CLIENT_ID" -var "github_client_secret=$AZURE_GITHUB_CLIENT_SECRET" -var "github_logon_redirect=$AZURE_GITHUB_LOGON_REDIRECT") && 
       echo curl -dH -X POST "$(printf %q $(terraform output -raw cd_webhook))" &&
       exit 0;
 
