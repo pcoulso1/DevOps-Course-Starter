@@ -42,16 +42,16 @@ before_deploy:
   - echo $DOCKERHUB_PWD | docker login --username $DOCKER_NAMESPACE --password-stdin
   - docker push $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT
   - if [ "$TRAVIS_BRANCH" = "module-12" ]; then docker push $DOCKER_NAMESPACE/$DOCKER_APP; fi
+  - wget https://releases.hashicorp.com/terraform/"$TF_VERSION"/terraform_"$TF_VERSION"_linux_amd64.zip
+  - unzip terraform_"$TF_VERSION"_linux_amd64.zip
+  - sudo mv terraform /usr/local/bin/
+  - rm terraform_"$TF_VERSION"_linux_amd64.zip
+  - if [ "$TRAVIS_BRANCH" = "module-12" ]; then terraform init; fi
+  - if [ "$TRAVIS_BRANCH" = "module-12" ]; then terraform apply -auto-approve -var "github_client_id=$AZURE_GITHUB_CLIENT_ID" -var "github_client_secret=$AZURE_GITHUB_CLIENT_SECRET" -var "github_logon_redirect=$AZURE_GITHUB_LOGON_REDIRECT"; fi
 
 deploy:
   - provider: script
-    script: >-
-      wget https://releases.hashicorp.com/terraform/"$TF_VERSION"/terraform_"$TF_VERSION"_linux_amd64.zip &&
-      unzip terraform_"$TF_VERSION"_linux_amd64.zip &&
-      sudo mv terraform /usr/local/bin/ &&
-      rm terraform_"$TF_VERSION"_linux_amd64.zip &&
-      terraform init &&
-      terraform apply -auto-approve -var "github_client_id=$AZURE_GITHUB_CLIENT_ID" -var "github_client_secret=$AZURE_GITHUB_CLIENT_SECRET" -var "github_logon_redirect=$AZURE_GITHUB_LOGON_REDIRECT" &&
+    script: 
       curl -dH -X POST "$(printf %q $(terraform output -raw cd_webhook))"
     on:
       branch: module-12
