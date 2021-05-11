@@ -32,20 +32,21 @@ services:
   - docker
 
 script:
-  - docker build --target production --tag $DOCKER_NAMESPACE/$DOCKER_APP .
-  - docker tag $DOCKER_NAMESPACE/$DOCKER_APP $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT
-  - docker build --target test --tag $DOCKER_NAMESPACE/$DOCKER_APP-test .
-  - docker run --rm -e FLASK_APP -e FLASK_ENV -e MONGO_URL -e MONGO_DEFAULT_DATABASE -e OAUTHLIB_INSECURE_TRANSPORT -e GITHUB_CLIENT_ID -e GITHUB_CLIENT_SECRET -e GITHUB_LOGON_REDIRECT $DOCKER_NAMESPACE/$DOCKER_APP-test tests
+  - docker info
+  # - docker build --target production --tag $DOCKER_NAMESPACE/$DOCKER_APP .
+  # - docker tag $DOCKER_NAMESPACE/$DOCKER_APP $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT
+  # - docker build --target test --tag $DOCKER_NAMESPACE/$DOCKER_APP-test .
+  # - docker run --rm -e FLASK_APP -e FLASK_ENV -e MONGO_URL -e MONGO_DEFAULT_DATABASE -e OAUTHLIB_INSECURE_TRANSPORT -e GITHUB_CLIENT_ID -e GITHUB_CLIENT_SECRET -e GITHUB_LOGON_REDIRECT $DOCKER_NAMESPACE/$DOCKER_APP-test tests
   # - docker run --rm -e FLASK_APP -e FLASK_ENV -e MONGO_URL -e MONGO_DEFAULT_DATABASE -e OAUTHLIB_INSECURE_TRANSPORT -e GITHUB_CLIENT_ID -e GITHUB_CLIENT_SECRET -e GITHUB_LOGON_REDIRECT $DOCKER_NAMESPACE/$DOCKER_APP-test tests_e2e
 
 before_deploy:
   - echo $DOCKERHUB_PWD | docker login --username $DOCKER_NAMESPACE --password-stdin
   - docker push $DOCKER_NAMESPACE/$DOCKER_APP:$TRAVIS_COMMIT
+  # docker push $DOCKER_NAMESPACE/$DOCKER_APP && 
 
 deploy:
   - provider: script
-    script: |
-      docker push $DOCKER_NAMESPACE/$DOCKER_APP && 
+    script: >-
       wget https://releases.hashicorp.com/terraform/"$TF_VERSION"/terraform_"$TF_VERSION"_linux_amd64.zip && 
       unzip terraform_"$TF_VERSION"_linux_amd64.zip && 
       sudo mv terraform /usr/local/bin/ && 
