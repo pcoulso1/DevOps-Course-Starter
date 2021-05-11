@@ -18,8 +18,7 @@ class Store:
         if self.MONGODB_DATABASE is None:
 
             if self.MONGODB_CLIENT is None:
-                self.MONGODB_CLIENT = pymongo.MongoClient(
-                    f'{Config().MONGO_URL}')
+                self.MONGODB_CLIENT = pymongo.MongoClient(Config().MONGO_URL)
             self.MONGODB_DATABASE = self.MONGODB_CLIENT[db_name]
 
         return self.MONGODB_DATABASE
