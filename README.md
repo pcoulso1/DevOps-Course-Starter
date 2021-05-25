@@ -154,14 +154,26 @@ Note: See section on MongoDB setup for details of how to obtain the username / p
 
 ## Deploying using Teraform
 
-
+The following extract can be used to download terraform
 
 ```
 TF_VERSION=0.14.7
 # Download terraform
 wget https://releases.hashicorp.com/terraform/"$TF_VERSION"/terraform_"$TF_VERSION"_linux_amd64.zip 
 unzip terraform_"$TF_VERSION"_linux_amd64.zip 
+```
 
+The following environment variables will need to be set in order to get access to your Azure account.
+
+```
+ARM_CLIENT_ID
+ARM_TENANT_ID
+ARM_SUBSCRIPTION_ID
+ARM_CLIENT_SECRET
+```
+
+The following command can be used to deploy the application
+```
 # Execute terraform deploy
 terraform init
 terraform apply -auto-approve -var "github_client_id=$GITHUB_CLIENT_ID" -var "github_client_secret=$GITHUB_CLIENT_SECRET" -var "github_logon_redirect=$GITHUB_LOGON_REDIRECT"
