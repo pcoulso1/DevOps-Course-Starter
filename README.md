@@ -152,7 +152,24 @@ docker run -p 80:5000 \
 
 Note: See section on MongoDB setup for details of how to obtain the username / password and setup the .env file.
 
-### Documentation
+## Deploying using Teraform
+
+
+
+```
+TF_VERSION=0.14.7
+# Download terraform
+wget https://releases.hashicorp.com/terraform/"$TF_VERSION"/terraform_"$TF_VERSION"_linux_amd64.zip 
+unzip terraform_"$TF_VERSION"_linux_amd64.zip 
+
+# Execute terraform deploy
+terraform init
+terraform apply -auto-approve -var "github_client_id=$GITHUB_CLIENT_ID" -var "github_client_secret=$GITHUB_CLIENT_SECRET" -var "github_logon_redirect=$GITHUB_LOGON_REDIRECT"
+```
+_**Note** : See section for OAuth Setup for GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET and GITHUB_LOGON_REDIRECT_
+
+
+## Documentation
 
 C4 diagrams have been proded for this application in the file c4model.drawio. These can be viewed at https://app.diagrams.net/
 
