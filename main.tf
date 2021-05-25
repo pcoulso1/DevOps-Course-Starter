@@ -17,7 +17,6 @@ terraform {
 
 provider "azurerm" {
   features {}
-  skip_provider_registration = true
 }
 
 data "azurerm_resource_group" "main" {
@@ -50,19 +49,12 @@ resource "azurerm_cosmosdb_account" "main" {
     location          = data.azurerm_resource_group.main.location
     failover_priority = 0
   }
-
-  # lifecycle {
-  #   prevent_destroy = true
-  # }
 }
 
 resource "azurerm_cosmosdb_mongo_database" "main" {
   name                = "${var.prefix}-terraformed-cosmos-mongo-db"
   resource_group_name = data.azurerm_resource_group.main.name
   account_name        = azurerm_cosmosdb_account.main.name
-  # lifecycle {
-  #   prevent_destroy = true
-  # }
 }
 
 resource "azurerm_app_service_plan" "main" {
@@ -92,8 +84,8 @@ resource "azurerm_app_service" "main" {
     "MONGO_DEFAULT_DATABASE"     = "todoBoard"
     "FLASK_APP"                  = "app"
     "FLASK_ENV"                  = "production"
-    "GITHUB_CLIENT_ID"           = "${var.github_client_id}"
-    "GITHUB_CLIENT_SECRET"       = "${var.github_client_secret}"
-    "GITHUB_LOGON_REDIRECT"      = "${var.github_logon_redirect}"
+    "GITHUB_CLIENT_ID"           = var.github_client_id
+    "GITHUB_CLIENT_SECRET"       = var.github_client_secret
+    "GITHUB_LOGON_REDIRECT"      = var.github_logon_redirect
   }
 }
