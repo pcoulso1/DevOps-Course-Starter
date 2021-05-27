@@ -11,7 +11,7 @@ rm terraform_"$TF_VERSION"_linux_amd64.zip
 
 # Execute terraform deploy
 terraform init
-terraform apply -auto-approve -var "github_client_id=$AZURE_GITHUB_CLIENT_ID" -var "github_client_secret=$AZURE_GITHUB_CLIENT_SECRET" -var "github_logon_redirect=$AZURE_GITHUB_LOGON_REDIRECT"
+terraform apply -auto-approve -var "github_client_id=$AZURE_GITHUB_CLIENT_ID" -var "github_client_secret=$AZURE_GITHUB_CLIENT_SECRET" -var "github_logon_redirect=$AZURE_GITHUB_LOGON_REDIRECT" -var "loggy_token=$LOGGLY_TOKEN"
 
 # Call Azure web hoot to restart app
 curl -dH -X POST "$(terraform output -raw cd_webhook)"
