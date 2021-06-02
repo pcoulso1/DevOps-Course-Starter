@@ -69,6 +69,12 @@ There's also a number of variables which are used to connect to MongoDb;
 
 When running `setup.sh`, the `.env.template` file will be copied to `.env` if the latter does not exist.
 
+## Loggly Setup
+To send logs to loggly (https://www.loggly.com/) setup an account and create a "Customer Tokens". Then add the following enviroment variable;
+* LOGGLY_TOKEN - Customer token from Loggly
+To change the loggin level set the LOG_LEVEL enviroment variable;
+* LOG_LEVEL - Can be ERROR, WARNING, INFO or DEBUG
+
 ## OAuth Setup
 
 This application uses OAuth for user authentication. The following GitHub documentation link shoes you how to register your application on GitHub for OAuth.

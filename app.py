@@ -124,10 +124,11 @@ def create_app(item_store = ItemStore(), user_store = UserStore()):
         if request.method == 'POST':
             if 'add' in request.form:
                 app.logger.info(f'Processing add name={request.form.get("new_todo_title")}') # pylint: disable=no-member
-                item_store.add_item(
+                id = item_store.add_item(
                     request.form.get('new_todo_title'),
                     request.form.get('new_todo_description'),
                     request.form.get('new_todo_due'))
+                app.logger.info(f'Add new item id={id}') # pylint: disable=no-member
             return redirect("/")
 
         return render_template('add.html')
@@ -151,7 +152,7 @@ def create_app(item_store = ItemStore(), user_store = UserStore()):
     @login_required
     @user_write_access
     def delete(id):                                                         # pylint: disable=unused-variable
-        print(f"in delete removing {id}")
+        app.logger.info(f"Delete called")
         if request.method == 'POST':
             if 'delete' in request.form:
                 app.logger.info(f'Deleting item id={id}')                   # pylint: disable=no-member
