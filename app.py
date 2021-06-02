@@ -13,7 +13,9 @@ from flask_login import (
     login_user,
     logout_user,
     )
-import logging
+from loggly.handlers import HTTPSHandler
+from pythonjsonlogger import jsonlogger
+from logging import getLogger
 
 # Appliction imports
 from items_view_model import ItemsViewModel
@@ -23,10 +25,17 @@ from github_oauth import GithubOauthProvider
 from user.user import User
 from user.user_access import user_write_access, user_admin_access
 from user.user_role import UserRole
+from log_config import LogConfig
 
 def create_app(item_store = ItemStore(), user_store = UserStore()):
     app = Flask(__name__)
-    logging.basicConfig(level=logging.INFO)
+    app.logger.setLevel(LogConfig.LOG_LEVEL)
+
+    if LogConfig.LOGGLY_TOKEN is not None:
+        handler = HTTPSHandler(f'https://logs-01.loggly.com/inputs/{LogConfig.LOGGLY_TOKEN}/tag/todo-app')
+        handler.setFormatter(jsonlogger.JsonFormatter("[%(asctime)s] %(levelname)s in %(module)s: %(message)s"))
+        app.logger.addHandler(handler)
+        getLogger('werkzeug').addHandler(HTTPSHandler(f'https://logs-01.loggly.com/inputs/{LogConfig.LOGGLY_TOKEN}/tag/todo-app-requests'))
 
     oauth_provider = GithubOauthProvider()
 
@@ -68,6 +77,7 @@ def create_app(item_store = ItemStore(), user_store = UserStore()):
     @login_required
     def logout():
         logout_user()
+        app.logger.info('User has logged out') # pylint: disable=no-member
         return redirect("/")
 
     @app.route("/admin")
@@ -75,13 +85,14 @@ def create_app(item_store = ItemStore(), user_store = UserStore()):
     @user_admin_access
     def admin():
         users =  user_store.get_users()
+        app.logger.info('Entering admin page') # pylint: disable=no-member
         return render_template('admin.html', users=users, current_user=current_user)
 
     @app.route('/user/<operation>/<id>', methods=['POST'])
     @login_required
     @user_write_access
     def update_user(operation, id):                                     # pylint: disable=unused-variable
-        print(f"Updateing user id={id} to {operation}")
+        app.logger.info(f"Updateing user to {operation}") # pylint: disable=no-member
         if operation == "reader":
             user_store.update_user(id, UserRole.READER)
         elif operation == "writer":
@@ -113,10 +124,11 @@ def create_app(item_store = ItemStore(), user_store = UserStore()):
         if request.method == 'POST':
             if 'add' in request.form:
                 app.logger.info(f'Processing add name={request.form.get("new_todo_title")}') # pylint: disable=no-member
-                item_store.add_item(
+                id = item_store.add_item(
                     request.form.get('new_todo_title'),
                     request.form.get('new_todo_description'),
                     request.form.get('new_todo_due'))
+                app.logger.info(f'Add new item id={id}') # pylint: disable=no-member
             return redirect("/")
 
         return render_template('add.html')
@@ -140,7 +152,7 @@ def create_app(item_store = ItemStore(), user_store = UserStore()):
     @login_required
     @user_write_access
     def delete(id):                                                         # pylint: disable=unused-variable
-        print(f"in delete removing {id}")
+        app.logger.info(f"Delete called")
         if request.method == 'POST':
             if 'delete' in request.form:
                 app.logger.info(f'Deleting item id={id}')                   # pylint: disable=no-member

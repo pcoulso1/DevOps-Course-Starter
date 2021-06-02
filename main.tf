@@ -84,6 +84,8 @@ resource "azurerm_app_service" "main" {
     "MONGO_DEFAULT_DATABASE"     = "todoBoard"
     "FLASK_APP"                  = "app"
     "FLASK_ENV"                  = "production"
+    "LOG_LEVEL"                  = "INFO"
+    "LOGGLY_TOKEN"               = var.loggy_token
     "GITHUB_CLIENT_ID"           = var.github_client_id
     "GITHUB_CLIENT_SECRET"       = var.github_client_secret
     "GITHUB_LOGON_REDIRECT"      = var.github_logon_redirect
