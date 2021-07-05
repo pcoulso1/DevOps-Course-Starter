@@ -186,6 +186,30 @@ terraform apply -auto-approve -var "github_client_id=$GITHUB_CLIENT_ID" -var "gi
 ```
 _**Note** : See section for OAuth Setup for GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET and GITHUB_LOGON_REDIRECT_
 
+## Deploying to minikube
+
+The ToDo application can be deployed to a kubernetes cluster the following instauctions can be used to deploy to minikube.
+
+The following command can be used build the application image using the minikube docker engine so that the image is accessable to kubernetes
+```
+minikube docker-env
+docker build --target production --tag todo-app:prod .
+```
+
+The following commands can be used to deploy the manifests for the application
+```
+cd minikube
+kubectl apply -f configmap.yaml
+kubectl apply -f secret.yaml
+kubectl apply -f service.yaml
+kubectl apply -f deployment.yaml
+```
+_**Note** : The secret.yaml will need to be populated with the relevent secrets_
+
+The following command will link the minikube service with the ports on localhost.
+```
+kubectl port-forward service/module-14 5000:80
+```
 
 ## Documentation
 
