@@ -1,0 +1,14 @@
+# configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: module-14
+data:
+  VERSION: "v0.1"
+  FLASK_APP: "app"
+  FLASK_ENV: "development"
+  LOG_LEVEL: "DEBUG"
+  MONGO_DEFAULT_DATABASE: "todoBoard"
+  OAUTHLIB_INSECURE_TRANSPORT: "1"
+  GITHUB_LOGON_REDIRECT: "http://localhost:5000/login/callback"
+

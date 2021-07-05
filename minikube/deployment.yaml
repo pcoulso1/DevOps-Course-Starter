@@ -1,0 +1,49 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: module-14
+spec:
+  selector:
+    matchLabels:
+      app: module-14
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: module-14
+    spec:
+      containers:
+        - name: todo-app
+          image: todo-app:prod
+          ports:
+          - containerPort: 5000
+          
+          envFrom:
+            - configMapRef:
+                name: module-14
+          
+          env:
+            - name: MONGO_URL
+              valueFrom:
+                secretKeyRef:
+                    name: module-14
+                    key: MONGO_URL
+
+            - name: GITHUB_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                    name: module-14
+                    key: GITHUB_CLIENT_ID
+                   
+            - name: GITHUB_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                    name: module-14
+                    key: GITHUB_CLIENT_SECRET
+                    
+            - name: LOGGLY_TOKEN
+              valueFrom:
+                secretKeyRef:
+                    name: module-14
+                    key: LOGGLY_TOKEN
